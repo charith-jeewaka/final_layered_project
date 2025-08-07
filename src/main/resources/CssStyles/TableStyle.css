@@ -1,0 +1,11 @@
+tblCustomer.table-row-cell:odd {
+    -fx-background-color: #1c1616;
+}
+
+tblCustomer.table-row-cell:even {
+    -fx-background-color: #b63434;
+}
+
+tblCustomer.table-row-cell:hover {
+    -fx-background-color: #18c51d;
+}
