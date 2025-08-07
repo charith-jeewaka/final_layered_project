@@ -2,7 +2,6 @@ package lk.ijse.florist_pos.final_project.controller;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -16,7 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lk.ijse.florist_pos.final_project.dto.CustomerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CustomerTM;
-import lk.ijse.florist_pos.final_project.model.CustomerModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,7 +54,7 @@ public class CustomerPageController implements Initializable {
     public AnchorPane ancCustomer;
     public ImageView imageView;
 
-    CustomerModel customerModel = new CustomerModel();
+    CustomerDaoImpl customerModel = new CustomerDaoImpl();
 
 
     @Override

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.SentEmailsTM;
-import lk.ijse.florist_pos.final_project.model.SentEmailModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -54,7 +54,7 @@ public class MailRecordsPageController implements Initializable {
         ObservableList<SentEmailsTM> tmList = FXCollections.observableArrayList();
 
         try {
-            List<SentEmailDto> allEmails = SentEmailModel.getAllSentEmails();
+            List<SentEmailDto> allEmails = SentEmailDaoImpl.getAllSentEmails();
             for (SentEmailDto dto : allEmails) {
                 JFXButton viewBtn = new JFXButton("View");
                 viewBtn.setStyle("-fx-background-color: #2ed573; -fx-text-fill: #ffffff;");
@@ -64,7 +64,7 @@ public class MailRecordsPageController implements Initializable {
                 deleteBtn.setStyle("-fx-background-color: #ff6b81; -fx-text-fill: white;");
                 deleteBtn.setOnAction(e -> {
                     try {
-                        boolean isDeleted = SentEmailModel.deleteSentEmail(dto.getTimeStamp());
+                        boolean isDeleted = SentEmailDaoImpl.deleteSentEmail(dto.getTimeStamp());
                         if (isDeleted) loadAllEmails();
                     } catch (SQLException ex) {
                         ex.printStackTrace();

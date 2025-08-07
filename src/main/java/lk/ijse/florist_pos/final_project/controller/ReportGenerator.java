@@ -1,6 +1,6 @@
 package lk.ijse.florist_pos.final_project.controller;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
-import lk.ijse.florist_pos.final_project.model.OrderModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
@@ -15,7 +15,7 @@ public class ReportGenerator {
     public void generateTodaySalesReport() {
         try {
             // 1. Get today's total income from model
-            BigDecimal todayIncome = OrderModel.getTodayTotalSales();
+            BigDecimal todayIncome = OrderDaoImpl.getTodayTotalSales();
             String todayIncomeString = todayIncome.toString();
             System.out.println(todayIncomeString);
 
@@ -42,7 +42,7 @@ public class ReportGenerator {
 
     public void generateYesterdaySalesReport() {
         try {
-            BigDecimal yesterdayIncome = OrderModel.getYesterdayTotalSales();
+            BigDecimal yesterdayIncome = OrderDaoImpl.getYesterdayTotalSales();
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(
                     getClass().getResource("/Reports/ysales.jasper")
             );

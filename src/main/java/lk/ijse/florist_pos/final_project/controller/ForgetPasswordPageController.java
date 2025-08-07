@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import lk.ijse.florist_pos.final_project.model.SystemUserModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ public class ForgetPasswordPageController {
             String phone = txtMobile.getText();
             String role = txtRole.getText();
 
-            SystemUserModel systemUserModel = new SystemUserModel();
+            SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
             SavePasswordPageController savePasswordPageController = new SavePasswordPageController();
 
             boolean isValid = systemUserModel.validateUserForPasswordReset(userId,username,role,phone,email,nic);

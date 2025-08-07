@@ -1,5 +1,6 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
+import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FlowerModel {
+public class FlowerDaoImpl implements FlowerDao {
     public String getNextFlowerId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select flower_id from flower order by flower_id desc limit 1");

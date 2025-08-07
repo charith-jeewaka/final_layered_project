@@ -1,6 +1,6 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
-import lk.ijse.florist_pos.final_project.dto.CustomerDto;
+import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PlantModel {
+public class PlantDaoImpl implements PlantDao {
     public String getNextPlantId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select plant_id from plant order by plant_id desc limit 1");

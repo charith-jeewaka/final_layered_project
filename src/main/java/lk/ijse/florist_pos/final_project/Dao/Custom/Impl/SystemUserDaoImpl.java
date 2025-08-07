@@ -1,4 +1,4 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SystemUserDao;
 import lk.ijse.florist_pos.final_project.controller.DashboardController;
 import lk.ijse.florist_pos.final_project.controller.LoginScreenController;
 import lk.ijse.florist_pos.final_project.dto.SystemUserDto;
@@ -17,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-public class SystemUserModel {
+public class SystemUserDaoImpl implements SystemUserDao {
     public void validateLogin(TextField username, PasswordField password, Label label) {
         LoginScreenController loginScreenController = new LoginScreenController();
         try {

@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.FlowerWasteDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerWasteTm;
-import lk.ijse.florist_pos.final_project.model.FlowerWasteModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerWasteDaoImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,7 +30,7 @@ public class ItemWastePageController implements Initializable {
     public ImageView imageView;
     public AnchorPane ancWaste;
 
-    FlowerWasteModel flowerWasteModel = new FlowerWasteModel();
+    FlowerWasteDaoImpl flowerWasteModel = new FlowerWasteDaoImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

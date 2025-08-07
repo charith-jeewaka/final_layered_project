@@ -20,8 +20,8 @@ import jakarta.mail.internet.MimeMessage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
-import lk.ijse.florist_pos.final_project.model.SentEmailModel;
-import lk.ijse.florist_pos.final_project.model.SupplierModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SupplierDaoImpl;
 import lk.ijse.florist_pos.final_project.util.MailConfigLoader;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class SendMailPageController {
         });
 
         try {
-            List<String> emails = SupplierModel.getAllSupplierEmails();
+            List<String> emails = SupplierDaoImpl.getAllSupplierEmails();
             cmbSupplierEmail.setItems(FXCollections.observableArrayList(emails));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -151,7 +151,7 @@ public class SendMailPageController {
                             null
 
                     );
-                    SentEmailModel.saveEmail(emailDTO);
+                    SentEmailDaoImpl.saveEmail(emailDTO);
                     alert.showAndWait();
 
                     txtSubject.clear();

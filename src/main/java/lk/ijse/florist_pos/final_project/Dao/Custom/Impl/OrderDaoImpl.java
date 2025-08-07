@@ -1,25 +1,22 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
-import javafx.scene.chart.XYChart;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
+import lk.ijse.florist_pos.final_project.Dao.Custom.OrderDao;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
-import lk.ijse.florist_pos.final_project.dto.Tm.DailySalesTM;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
-import javax.swing.plaf.PanelUI;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderModel {
-    private final FlowerModel flowerModel = new FlowerModel();
+public class OrderDaoImpl implements OrderDao {
+    private final FlowerDaoImpl flowerModel = new FlowerDaoImpl();
 
     public String getNextOrderId() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select order_id from orders order by order_id desc limit 1");
@@ -93,13 +90,13 @@ public class OrderModel {
 
                 if (itemId.startsWith("P")) {
                     // It's a plant
-                    if (!PlantModel.reduceQty(itemId, qtyToReduce, connection)) {
+                    if (!PlantDaoImpl.reduceQty(itemId, qtyToReduce, connection)) {
                         connection.rollback();
                         return false;
                     }
                 } else if (itemId.startsWith("F")) {
                     // It's a flower
-                    if (!FlowerModel.reduceQty(itemId, qtyToReduce, connection)) {
+                    if (!FlowerDaoImpl.reduceQty(itemId, qtyToReduce, connection)) {
                         connection.rollback();
                         return false;
                     }

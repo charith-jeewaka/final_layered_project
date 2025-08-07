@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.EmployeeDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.StaffTM;
-import lk.ijse.florist_pos.final_project.model.StaffModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.StaffDaoImpll;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class StaffPageController implements Initializable {
     public Label lblEmpId;
     public TextField txtSalary;
     public TextField txtRole;
-    StaffModel staffModel = new StaffModel();
+    StaffDaoImpll staffModel = new StaffDaoImpll();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

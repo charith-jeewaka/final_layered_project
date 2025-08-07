@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.PlantTM;
-import lk.ijse.florist_pos.final_project.model.PlantModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -51,7 +51,7 @@ public class PlantPageController implements Initializable {
     public JFXButton btnPlantPageReset;
     public JFXButton btnPlantSave;
 
-    private final PlantModel plantModel = new PlantModel();
+    private final PlantDaoImpl plantModel = new PlantDaoImpl();
 
     private final String namePattern = "^[A-Za-z ]+$";
     private final String heightPattern = "^(0\\.5|[1-4](\\.5)?|5)$";

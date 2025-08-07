@@ -1,6 +1,7 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SupplierDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierModel {
+public class SupplierDaoImpl implements SupplierDao {
 
     public static List<String> getAllSupplierEmails() throws SQLException {
         String sql = "SELECT supplier_e_mail FROM supplier";

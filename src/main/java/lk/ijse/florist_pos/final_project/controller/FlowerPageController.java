@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerTM;
-import lk.ijse.florist_pos.final_project.model.FlowerModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -51,7 +51,7 @@ public class FlowerPageController implements Initializable {
     public JFXButton btnSaveFlower;
     public ImageView imageView;
 
-    FlowerModel flowerModel = new FlowerModel();
+    FlowerDaoImpl flowerModel = new FlowerDaoImpl();
 
     String namePattern = "^[A-Za-z ]+$";
     String pricePattern = "^\\d+(\\.\\d{2})?$";

@@ -14,8 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CartTm;
-import lk.ijse.florist_pos.final_project.model.OrderModel;
-import lk.ijse.florist_pos.final_project.util.CrudUtil;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,7 +54,7 @@ public class OrderPageController implements Initializable {
     public TextField txtCash;
 
     private final ObservableList<CartTm> cartTmList = FXCollections.observableArrayList();
-    private final OrderModel orderModel = new OrderModel();
+    private final OrderDaoImpl orderModel = new OrderDaoImpl();
     public JFXRadioButton rbtnCard;
     public JFXRadioButton rbtnCash;
     public ToggleGroup paymentType = new ToggleGroup();

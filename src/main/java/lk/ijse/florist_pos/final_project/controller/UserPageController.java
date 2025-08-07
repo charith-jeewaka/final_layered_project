@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.dto.SystemUserDto;
-import lk.ijse.florist_pos.final_project.model.SystemUserModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -73,7 +73,7 @@ public class UserPageController implements Initializable {
         if(isValidMobile && isValidEmail && isValidPassword && isValidName) {
 
             try {
-                boolean isSaved = SystemUserModel.saveUser(dto);
+                boolean isSaved = SystemUserDaoImpl.saveUser(dto);
                 if (isSaved) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

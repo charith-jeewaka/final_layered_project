@@ -1,14 +1,14 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
+import lk.ijse.florist_pos.final_project.Dao.Custom.StaffDao;
 import lk.ijse.florist_pos.final_project.dto.EmployeeDto;
-import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class StaffModel {
+public class StaffDaoImpll implements StaffDao {
     public String getNextFlowerId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select employee_id from employee order by employee_id desc limit 1");

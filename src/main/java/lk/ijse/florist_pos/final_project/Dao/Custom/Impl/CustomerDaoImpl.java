@@ -1,14 +1,14 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
+import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
 import lk.ijse.florist_pos.final_project.dto.CustomerDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerModel {
+public class CustomerDaoImpl implements CustomerDao {
     public String getNextCustomerId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select customer_id from customer order by customer_id desc limit 1");
@@ -88,10 +88,6 @@ public class CustomerModel {
             return null;
         }
     }
-
-
-
-
 
 
 }

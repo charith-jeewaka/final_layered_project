@@ -1,7 +1,7 @@
-package lk.ijse.florist_pos.final_project.model;
+package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
-import lk.ijse.florist_pos.final_project.dto.FlowerDto;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SentEmailModel {
+public class SentEmailDaoImpl implements SentEmailDao {
 
     public static boolean saveEmail(SentEmailDto dto) {
         Connection con = null;

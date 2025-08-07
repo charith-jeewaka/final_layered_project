@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import lk.ijse.florist_pos.final_project.model.SystemUserModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,7 +45,7 @@ public class LoginScreenController implements Initializable {
     public void btnLogginOnAction(ActionEvent actionEvent) {
        if (txtUserName.getText().isBlank() == false && txtPassword.getText().isBlank() == false ) {
            lblIncorrectMassage.setText("Invalid username or password");
-           SystemUserModel systemUserModel = new SystemUserModel();
+           SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
            systemUserModel.validateLogin(txtUserName,txtPassword,lblIncorrectMassage);
            clearText();
        }

@@ -6,10 +6,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.florist_pos.final_project.model.FlowerModel;
-import lk.ijse.florist_pos.final_project.model.OrderModel;
-import lk.ijse.florist_pos.final_project.model.PlantModel;
-import lk.ijse.florist_pos.final_project.model.StaffModel;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.StaffDaoImpll;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,15 +33,15 @@ public class HomePageController implements Initializable {
         imageView.fitWidthProperty().bind(ancHome.widthProperty());
         imageView.fitHeightProperty().bind(ancHome.heightProperty());
         try {
-            double yesterdaySale = OrderModel.getYesterdayTotalSale();
+            double yesterdaySale = OrderDaoImpl.getYesterdayTotalSale();
             lblYesterdaySale.setText(String.valueOf(yesterdaySale));
-            double todaySale = OrderModel.getTodayTotalSale();
+            double todaySale = OrderDaoImpl.getTodayTotalSale();
             lblTodaySale.setText(String.valueOf(todaySale));
-            int totalPlants = PlantModel.getTotalPlantQty();
+            int totalPlants = PlantDaoImpl.getTotalPlantQty();
             lblTotalPlants.setText(String.valueOf(totalPlants));
-            int totalEmployee = StaffModel.getTotalEmployees();
+            int totalEmployee = StaffDaoImpll.getTotalEmployees();
             lblEmployees.setText(String.valueOf(totalEmployee));
-            int totalFlowers = FlowerModel.getTotalFlowerQty();
+            int totalFlowers = FlowerDaoImpl.getTotalFlowerQty();
             lblTotalFlowers.setText(String.valueOf(totalFlowers));
         } catch (SQLException e) {
             throw new RuntimeException(e);
