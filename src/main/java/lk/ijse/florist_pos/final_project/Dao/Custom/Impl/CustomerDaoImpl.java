@@ -59,14 +59,14 @@ public class CustomerDaoImpl implements CustomerDao {
         );
     }
     @Override
-    public void delete(String customerId) throws SQLException {
-        CrudUtil.execute("delete from customer where customer_id=?", customerId);
+    public boolean delete(String customerId) throws SQLException {
+      return    CrudUtil.execute("delete from customer where customer_id=?", customerId);
     }
 
 
     @Override
-    public void update(Customer customer) throws SQLException {
-        CrudUtil.execute(
+    public boolean update(Customer customer) throws SQLException {
+       return CrudUtil.execute(
                 "UPDATE customer SET name = ?, phone_number = ?, email = ?, address = ? WHERE customer_id = ?",
                 customer.getCustomerName(),
                 customer.getMobileNumber(),

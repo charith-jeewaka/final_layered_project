@@ -1,21 +1,17 @@
 package lk.ijse.florist_pos.final_project.Dao;
 
-import lk.ijse.florist_pos.final_project.Entity.Customer;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CrudDao<T> extends SuperDao{
 
-    public String getNextId() throws SQLException ;
+     ArrayList<T> getAll() throws SQLException ;
 
-    public ArrayList<T> getAll() throws SQLException ;
+     boolean save(T entity) throws SQLException ;
 
-    public boolean save(T customerDTO) throws SQLException ;
+     boolean delete(String Id) throws SQLException ;
 
-    public void delete(String Id) throws SQLException ;
+     boolean update(T entity) throws SQLException ;
 
-    public void update(T customerDTO) throws SQLException ;
-
-    public T search(String number) throws SQLException ;
+     T search(String number) throws SQLException ;
 }

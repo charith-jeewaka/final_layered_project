@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Entity.Flower;
 import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
@@ -153,17 +154,17 @@ public class FlowerPageController implements Initializable {
     }
 
     public void loadTableData() throws SQLException {
-        ArrayList<FlowerDto> flowerDtos = flowerModel.getAllFlower();
+        ArrayList<Flower> flowers = flowerModel.getAll();
         ObservableList<FlowerTM> flowerTMS = FXCollections.observableArrayList();
-        for (FlowerDto flowerDto : flowerDtos) {
+        for (Flower flower : flowers) {
             FlowerTM flowerTM = new FlowerTM(
-                    flowerDto.getFlowerId(),
-                    flowerDto.getFlowerName(),
-                    flowerDto.getFlowerCategory(),
-                    flowerDto.getFlowerPrice(),
-                    flowerDto.getFlowerStatus(),
-                    flowerDto.getFlowerAvailableQty(),
-                    flowerDto.getFlowerEnteredTime()
+                    flower.getFlowerId(),
+                    flower.getFlowerName(),
+                    flower.getFlowerCategory(),
+                    flower.getFlowerPrice(),
+                    flower.getFlowerStatus(),
+                    flower.getFlowerAvailableQty(),
+                    flower.getFlowerEnteredTime()
             );
             flowerTMS.add(flowerTM);
         }
@@ -187,7 +188,7 @@ public class FlowerPageController implements Initializable {
         boolean isValidPrice = price.matches(pricePattern);
         boolean isValidQty = qty.matches(qtyPattern);
 
-        FlowerDto flowerDto = new FlowerDto(
+        Flower flower = new Flower(
                 id,
                 name,
                 category,
@@ -199,7 +200,7 @@ public class FlowerPageController implements Initializable {
 
         if (isValidName && isValidCategory && isValidPrice && isValidQty) {
             try {
-                boolean isSaved = flowerModel.saveFlower(flowerDto);
+                boolean isSaved = flowerModel.save(flower);
 
                 if (isSaved) {
                     resetFlowerPage();
@@ -259,9 +260,8 @@ public class FlowerPageController implements Initializable {
 
             String flowerId = lblFlowerId.getText();
             try {
-                boolean isDeleted = flowerModel.deleteFlower(flowerId);
 
-                if (isDeleted) {
+                if (flowerModel.delete(flowerId)) {
                     resetFlowerPage();
                     new Alert(Alert.AlertType.INFORMATION, "Flower deleted successfully.").show();
                 } else {
@@ -288,7 +288,7 @@ public class FlowerPageController implements Initializable {
         boolean isValidPrice = price.matches(pricePattern);
         boolean isValidQty = qty.matches(qtyPattern);
 
-        FlowerDto flowerDto = new FlowerDto(
+        Flower flower = new Flower(
                 id,
                 name,
                 category,
@@ -299,7 +299,7 @@ public class FlowerPageController implements Initializable {
         );
         if (isValidName && isValidCategory && isValidPrice && isValidQty) {
             try {
-                boolean isUpdated = flowerModel.updateFlower(flowerDto);
+                boolean isUpdated = flowerModel.update(flower);
                 if (isUpdated) {
                     new Alert(Alert.AlertType.INFORMATION, "Flower updated successfully.").show();
                     resetFlowerPage();

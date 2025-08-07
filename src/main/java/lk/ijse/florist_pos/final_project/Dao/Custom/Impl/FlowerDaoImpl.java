@@ -1,6 +1,7 @@
 package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
+import lk.ijse.florist_pos.final_project.Entity.Flower;
 import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
@@ -27,11 +28,11 @@ public class FlowerDaoImpl implements FlowerDao {
         return tableCharacter + "001";
     }
 
-    public ArrayList<FlowerDto> getAllFlower() throws SQLException {
+    public ArrayList<Flower> getAll() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select * from flower");
-        ArrayList<FlowerDto> flowerDTOArrayList = new ArrayList<>();
+        ArrayList<Flower> flowers = new ArrayList<>();
         while (resultSet.next()){
-            FlowerDto flowerDTO = new FlowerDto(
+            Flower flower = new Flower(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -40,36 +41,43 @@ public class FlowerDaoImpl implements FlowerDao {
                     resultSet.getString(6),
                     resultSet.getString(7)
             );
-            flowerDTOArrayList.add(flowerDTO);
+            flowers.add(flower);
         }
-        return flowerDTOArrayList;
+        return flowers;
     }
 
-    public boolean saveFlower(FlowerDto flowerDto) throws SQLException {
+    public boolean save(Flower flower) throws SQLException {
         return CrudUtil.execute("INSERT INTO flower (flower_id, flower_name, flower_catagory, flower_price, flower_status, flower_available_qty) VALUES (?, ?, ?, ?, ?, ?)",
-        flowerDto.getFlowerId(),
-        flowerDto.getFlowerName(),
-        flowerDto.getFlowerCategory(),
-        flowerDto.getFlowerPrice(),
-        flowerDto.getFlowerStatus(),
-        flowerDto.getFlowerAvailableQty()
+        flower.getFlowerId(),
+        flower.getFlowerName(),
+        flower.getFlowerCategory(),
+        flower.getFlowerPrice(),
+        flower.getFlowerStatus(),
+        flower.getFlowerAvailableQty()
         );
     }
 
-    public boolean updateFlower(FlowerDto flowerDto) throws SQLException {
+    public boolean update(Flower flower) throws SQLException {
         return CrudUtil.execute(
                 "UPDATE flower SET flower_name = ?, flower_catagory = ?, flower_price = ?, flower_available_qty = ? WHERE flower_id = ?",
-                flowerDto.getFlowerName(),
-                flowerDto.getFlowerCategory(),
-                flowerDto.getFlowerPrice(),
-                flowerDto.getFlowerAvailableQty(),
-                flowerDto.getFlowerId()
+                flower.getFlowerName(),
+                flower.getFlowerCategory(),
+                flower.getFlowerPrice(),
+                flower.getFlowerAvailableQty(),
+                flower.getFlowerId()
         );
     }
 
-    public boolean deleteFlower(String flowerId) throws SQLException {
+    public boolean delete(String flowerId) throws SQLException {
         return CrudUtil.execute("DELETE FROM flower WHERE flower_id = ?", flowerId);
     }
+
+    @Override
+    public Flower search(String number) throws SQLException {
+        return null;
+    }
+
+
     public void updateFlowerLifeStatus() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM flower");
         while (resultSet.next()) {
