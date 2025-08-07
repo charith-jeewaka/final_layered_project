@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
+import lk.ijse.florist_pos.final_project.Entity.Customer;
 import lk.ijse.florist_pos.final_project.dto.CustomerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CustomerTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
@@ -54,7 +56,7 @@ public class CustomerPageController implements Initializable {
     public AnchorPane ancCustomer;
     public ImageView imageView;
 
-    CustomerDaoImpl customerModel = new CustomerDaoImpl();
+    CustomerDao customerDao = new CustomerDaoImpl();
 
 
     @Override
@@ -85,7 +87,7 @@ public class CustomerPageController implements Initializable {
     private void loadTableData() throws SQLException {
 
         tblCustomer.setItems(FXCollections.observableArrayList(
-                customerModel.getAllCustomer().stream()
+                customerDao.getAll().stream()
                         .map(customerDTO -> new CustomerTM(
                                 customerDTO.getCustomerId(),
                                 customerDTO.getCustomerName(),
@@ -101,7 +103,7 @@ public class CustomerPageController implements Initializable {
     private void resetPage() {
         try {
             loadTableData();
-            lblCustomerId.setText(customerModel.getNextCustomerId());
+            lblCustomerId.setText(customerDao.getNextId());
 
 
             btnSave.setDisable(false);
@@ -134,7 +136,7 @@ public class CustomerPageController implements Initializable {
         boolean isValidEmail = email.matches(emailPattern);
         boolean isValidAddress = address.matches(addressPattern);
 
-        CustomerDto customerDTO = new CustomerDto(
+        Customer customer = new Customer(
                 customerId,
                 name,
                 phone,
@@ -145,7 +147,7 @@ public class CustomerPageController implements Initializable {
 
         if (isValidName && isValidPhone && isValidEmail && isValidAddress) {
             try {
-                boolean isSaved = customerModel.saveCustomer(customerDTO);
+                boolean isSaved = customerDao.save(customer);
 
                 if (isSaved) {
                     resetPage();
@@ -163,7 +165,7 @@ public class CustomerPageController implements Initializable {
     }
 
     private void loadNextId() throws SQLException {
-        String nextId = customerModel.getNextCustomerId();
+        String nextId = customerDao.getNextId();
         lblCustomerId.setText(nextId);
     }
 
@@ -181,8 +183,8 @@ public class CustomerPageController implements Initializable {
         String address = txtAddress.getText();
 
         if (isValidName && isValidPhone && isValidEmail && isValidAddress) {
-            CustomerDto customerDto = new CustomerDto(customerId,name,phone,email,address,null);
-            customerModel.updateCustomer(customerDto);
+            Customer customer = new Customer(customerId,name,phone,email,address,null);
+            customerDao.update(customer);
             resetPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully.").show();
         }else {
@@ -197,19 +199,19 @@ public class CustomerPageController implements Initializable {
         if (alert.getResult() != ButtonType.YES) {
             return;
         }
-        customerModel.deleteCustomer(lblCustomerId.getText() );
+        customerDao.delete(lblCustomerId.getText() );
         resetPage();
         new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully.").show();
     }
 
     public void searchCustomerOnAction(ActionEvent actionEvent) throws SQLException {
         try {
-            CustomerDto customerDto = customerModel.searchCustomer(txtSearchCustomer.getText());
-            txtName.setText(customerDto.getCustomerName());
-            txtPhone.setText(customerDto.getMobileNumber());
-            txtEmail.setText(customerDto.getEmail());
-            txtAddress.setText(customerDto.getCustomerAddress());
-            lblCustomerId.setText(customerDto.getCustomerId());
+            Customer customer = customerDao.search(txtSearchCustomer.getText());
+            txtName.setText(customer.getCustomerName());
+            txtPhone.setText(customer.getMobileNumber());
+            txtEmail.setText(customer.getEmail());
+            txtAddress.setText(customer.getCustomerAddress());
+            lblCustomerId.setText(customer.getCustomerId());
             btnSave.setDisable(true);
             btnDelete.setDisable(false);
             btnUpdate.setDisable(false);

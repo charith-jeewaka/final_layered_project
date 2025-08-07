@@ -1,7 +1,7 @@
 package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
-import lk.ijse.florist_pos.final_project.dto.CustomerDto;
+import lk.ijse.florist_pos.final_project.Entity.Customer;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerDaoImpl implements CustomerDao {
-    public String getNextCustomerId() throws SQLException {
+    @Override
+    public String getNextId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select customer_id from customer order by customer_id desc limit 1");
         char tableCharacter = 'C'; // Use any character Ex:- customer table for C, item table for I
@@ -23,14 +24,14 @@ public class CustomerDaoImpl implements CustomerDao {
         }
         return tableCharacter + "001";
     }
-
-    public ArrayList<CustomerDto> getAllCustomer() throws SQLException {
+    @Override
+    public ArrayList<Customer> getAll() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select * from customer");
 
-        ArrayList<CustomerDto> customerDTOArrayList = new ArrayList<>();
+        ArrayList<Customer> customers = new ArrayList<>();
         while (resultSet.next()) {
-            CustomerDto customerDTO = new CustomerDto(
+            Customer customer = new Customer(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -38,45 +39,49 @@ public class CustomerDaoImpl implements CustomerDao {
                     resultSet.getString(5),
                     resultSet.getString(6)
             );
-            customerDTOArrayList.add(customerDTO);
+            customers.add(customer);
         }
         System.out.println("hello");
 
-        return customerDTOArrayList;
+        return customers;
 
     }
 
-    public boolean saveCustomer(CustomerDto customerDTO) throws SQLException {
+    @Override
+    public boolean save(Customer customer) throws SQLException {
         return CrudUtil.execute(
                 "insert into customer (customer_id, name, phone_number, email, address) values (?,?,?,?,?)",
-                customerDTO.getCustomerId(),
-                customerDTO.getCustomerName(),
-                customerDTO.getMobileNumber(),
-                customerDTO.getEmail(),
-                customerDTO.getCustomerAddress()
+                customer.getCustomerId(),
+                customer.getCustomerName(),
+                customer.getMobileNumber(),
+                customer.getEmail(),
+                customer.getCustomerAddress()
         );
     }
-
-    public void deleteCustomer(String customerId) throws SQLException {
+    @Override
+    public void delete(String customerId) throws SQLException {
         CrudUtil.execute("delete from customer where customer_id=?", customerId);
     }
 
-    public void updateCustomer(CustomerDto customerDTO) throws SQLException {
+
+    @Override
+    public void update(Customer customer) throws SQLException {
         CrudUtil.execute(
                 "UPDATE customer SET name = ?, phone_number = ?, email = ?, address = ? WHERE customer_id = ?",
-                customerDTO.getCustomerName(),
-                customerDTO.getMobileNumber(),
-                customerDTO.getEmail(),
-                customerDTO.getCustomerAddress(),
-                customerDTO.getCustomerId()
+                customer.getCustomerName(),
+                customer.getMobileNumber(),
+                customer.getEmail(),
+                customer.getCustomerAddress(),
+                customer.getCustomerId()
         );
-    }
 
-    public CustomerDto searchCustomer(String number) throws SQLException {
+    }
+    @Override
+    public Customer search(String number) throws SQLException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer WHERE phone_number = ?;", number);
 
         if (resultSet.next()) {
-            return new CustomerDto(
+            return new Customer(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
