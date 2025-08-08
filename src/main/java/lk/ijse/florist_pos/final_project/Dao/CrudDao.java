@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public interface CrudDao<T> extends SuperDao{
 
+     String getNextId() throws SQLException;
+
      ArrayList<T> getAll() throws SQLException ;
 
      boolean save(T entity) throws SQLException ;

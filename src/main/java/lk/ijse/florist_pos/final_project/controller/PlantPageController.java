@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Entity.Plant;
 import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.PlantTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
@@ -125,19 +126,19 @@ public class PlantPageController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<PlantDto> plantDtoArrayList = plantModel.getAllPlants();
+        ArrayList<Plant> plants = plantModel.getAll();
         ObservableList<PlantTM> plantTMS = FXCollections.observableArrayList();
 
-        for (PlantDto plantDto : plantDtoArrayList) {
+        for (Plant plant : plants) {
 
             PlantTM plantTM = new PlantTM(
-                    plantDto.getPlantId(),
-                    plantDto.getPlantName(),
-                    plantDto.getPlantHeight(),
-                    plantDto.getPlantPrice(),
-                    plantDto.getPlantVarient(),
-                    plantDto.getPlantAvailableQty(),
-                    plantDto.getPlantRegisteredTime()
+                    plant.getPlantId(),
+                    plant.getPlantName(),
+                    plant.getPlantHeight(),
+                    plant.getPlantPrice(),
+                    plant.getPlantVarient(),
+                    plant.getPlantAvailableQty(),
+                    plant.getPlantRegisteredTime()
             );
             plantTMS.add(plantTM);
         }
@@ -166,7 +167,7 @@ public class PlantPageController implements Initializable {
     }
 
     private void loadNextId() throws SQLException {
-        String nextId = plantModel.getNextPlantId();
+        String nextId = plantModel.getNextId();
         lblPlantId.setText(nextId);
     }
 
@@ -212,7 +213,7 @@ public class PlantPageController implements Initializable {
         }
         String time = selectedItem.getPlantRegisteredTime(); // Use existing time
 
-        PlantDto plantDto = new PlantDto(id, name, height, price, varient, qty, time);
+        Plant plant = new Plant(id, name, height, price, varient, qty, time);
 
         boolean isValidName = name.matches(namePattern);
         boolean isValidHight = height.matches(heightPattern);
@@ -221,7 +222,7 @@ public class PlantPageController implements Initializable {
         boolean isValidQty = qty.matches(qtyPattern);
 
         if (isValidHight && isValidPrice && isValidVarient && isValidQty && isValidName) {
-            boolean isSaved = plantModel.updateCustomer(plantDto);
+            boolean isSaved = plantModel.update(plant);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Plant updated successfully.").show();
@@ -248,7 +249,7 @@ public class PlantPageController implements Initializable {
 
             String plantId = lblPlantId.getText();
             try {
-                boolean isDeleted = plantModel.deletePlant(plantId);
+                boolean isDeleted = plantModel.delete(plantId);
 
                 if (isDeleted) {
                     resetPage();
@@ -291,7 +292,7 @@ public class PlantPageController implements Initializable {
         // Validate all fields
         if (isValidName && isValidHeight && isValidPrice && isValidVarient && isValidQty) {
 
-            PlantDto plantDto = new PlantDto(Id,
+            Plant plant = new Plant(Id,
                     name,
                     height,
                     price,
@@ -301,7 +302,7 @@ public class PlantPageController implements Initializable {
 
             try {
 
-                boolean isSaved = plantModel.savePlant(plantDto);
+                boolean isSaved = plantModel.save(plant);
 
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Plant saved successfully.").show();

@@ -1,7 +1,9 @@
 package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
+import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.OrderDao;
+import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
@@ -16,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderDaoImpl implements OrderDao {
-    private final FlowerDaoImpl flowerModel = new FlowerDaoImpl();
+    final FlowerDaoImpl flowerModel = new FlowerDaoImpl();
+    final PlantDao plantDao = new PlantDaoImpl();
 
     public String getNextOrderId() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select order_id from orders order by order_id desc limit 1");
@@ -59,6 +62,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
+        final FlowerDao flowerDao = new FlowerDaoImpl();
         Connection connection = DBConnection.getInstance().getConnection();
         boolean isSuccess = false;
 
@@ -90,13 +94,13 @@ public class OrderDaoImpl implements OrderDao {
 
                 if (itemId.startsWith("P")) {
                     // It's a plant
-                    if (!PlantDaoImpl.reduceQty(itemId, qtyToReduce, connection)) {
+                    if (!plantDao.reduceQty(itemId, qtyToReduce, connection)) {
                         connection.rollback();
                         return false;
                     }
                 } else if (itemId.startsWith("F")) {
                     // It's a flower
-                    if (!FlowerDaoImpl.reduceQty(itemId, qtyToReduce, connection)) {
+                    if (!flowerDao.reduceQty(itemId, qtyToReduce, connection)) {
                         connection.rollback();
                         return false;
                     }

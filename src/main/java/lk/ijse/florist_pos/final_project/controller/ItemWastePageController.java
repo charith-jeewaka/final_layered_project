@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Entity.FlowerWaste;
 import lk.ijse.florist_pos.final_project.dto.FlowerWasteDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerWasteTm;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerWasteDaoImpl;
@@ -59,16 +60,16 @@ public class ItemWastePageController implements Initializable {
     }
 
     public void loadTableData() throws SQLException {
-        ArrayList<FlowerWasteDto> floweWDtos = flowerWasteModel.getAllWFlower();
+        ArrayList<FlowerWaste> flowerWastes = flowerWasteModel.getAll();
         ObservableList<FlowerWasteTm> flowerWTMS = FXCollections.observableArrayList();
-        for (FlowerWasteDto flowerWDto : floweWDtos) {
+        for (FlowerWaste flowerWaste : flowerWastes) {
             FlowerWasteTm flowerWTM = new FlowerWasteTm(
-                    flowerWDto.getWastedId(),
-                    flowerWDto.getFlowerId(),
-                    flowerWDto.getFlowerName(),
-                    flowerWDto.getFlowerQty(),
-                    flowerWDto.getReason(),
-                    flowerWDto.getWasteDate()
+                    flowerWaste.getWastedId(),
+                    flowerWaste.getFlowerId(),
+                    flowerWaste.getFlowerName(),
+                    flowerWaste.getFlowerQty(),
+                    flowerWaste.getReason(),
+                    flowerWaste.getWasteDate()
             );
             flowerWTMS.add(flowerWTM);
         }

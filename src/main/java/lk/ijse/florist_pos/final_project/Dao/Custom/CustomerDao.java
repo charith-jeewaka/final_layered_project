@@ -6,6 +6,4 @@ import lk.ijse.florist_pos.final_project.Entity.Customer;
 import java.sql.SQLException;
 
 public interface CustomerDao extends CrudDao<Customer> {
-
-    String getNextId() throws SQLException;
 }

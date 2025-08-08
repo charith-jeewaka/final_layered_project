@@ -172,7 +172,7 @@ public class FlowerPageController implements Initializable {
     }
 
     public void loadNextFlowerId() throws SQLException {
-        String nextId = flowerModel.getNextFlowerId();
+        String nextId = flowerModel.getNextId();
         lblFlowerId.setText(nextId);
     }
 

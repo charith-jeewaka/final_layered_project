@@ -2,7 +2,6 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.Entity.Flower;
-import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
 import java.sql.Connection;
@@ -12,7 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FlowerDaoImpl implements FlowerDao {
-    public String getNextFlowerId() throws SQLException {
+
+    @Override
+    public String getNextId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select flower_id from flower order by flower_id desc limit 1");
         char tableCharacter = 'F'; // Use any character Ex:- customer table for C, item table for I
@@ -28,6 +29,7 @@ public class FlowerDaoImpl implements FlowerDao {
         return tableCharacter + "001";
     }
 
+    @Override
     public ArrayList<Flower> getAll() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select * from flower");
         ArrayList<Flower> flowers = new ArrayList<>();
@@ -45,7 +47,7 @@ public class FlowerDaoImpl implements FlowerDao {
         }
         return flowers;
     }
-
+    @Override
     public boolean save(Flower flower) throws SQLException {
         return CrudUtil.execute("INSERT INTO flower (flower_id, flower_name, flower_catagory, flower_price, flower_status, flower_available_qty) VALUES (?, ?, ?, ?, ?, ?)",
         flower.getFlowerId(),
@@ -57,6 +59,7 @@ public class FlowerDaoImpl implements FlowerDao {
         );
     }
 
+    @Override
     public boolean update(Flower flower) throws SQLException {
         return CrudUtil.execute(
                 "UPDATE flower SET flower_name = ?, flower_catagory = ?, flower_price = ?, flower_available_qty = ? WHERE flower_id = ?",
@@ -68,6 +71,7 @@ public class FlowerDaoImpl implements FlowerDao {
         );
     }
 
+    @Override
     public boolean delete(String flowerId) throws SQLException {
         return CrudUtil.execute("DELETE FROM flower WHERE flower_id = ?", flowerId);
     }
@@ -77,7 +81,7 @@ public class FlowerDaoImpl implements FlowerDao {
         return null;
     }
 
-
+    @Override
     public void updateFlowerLifeStatus() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM flower");
         while (resultSet.next()) {
@@ -109,7 +113,8 @@ public class FlowerDaoImpl implements FlowerDao {
         }
     }
 
-    public static boolean reduceQty(String flowerId, int qtyToReduce, Connection connection) throws SQLException {
+    @Override
+    public  boolean reduceQty(String flowerId, int qtyToReduce, Connection connection) throws SQLException {
         String sql = "UPDATE flower SET flower_available_qty = flower_available_qty - ? WHERE flower_id = ? AND flower_available_qty >= ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setInt(1, qtyToReduce);
@@ -117,8 +122,8 @@ public class FlowerDaoImpl implements FlowerDao {
         pstm.setInt(3, qtyToReduce);
         return pstm.executeUpdate() > 0;
     }
-
-    public static int getTotalFlowerQty() throws SQLException {
+    @Override
+    public  int getTotalFlowerQty() throws SQLException {
         String sql = "SELECT COUNT(flower_id) AS flower_count FROM flower";
         ResultSet rs = CrudUtil.execute(sql);
         int flowerCount = 0;

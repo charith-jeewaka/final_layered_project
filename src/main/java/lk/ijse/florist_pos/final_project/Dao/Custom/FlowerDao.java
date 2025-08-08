@@ -2,15 +2,16 @@ package lk.ijse.florist_pos.final_project.Dao.Custom;
 
 import lk.ijse.florist_pos.final_project.Dao.CrudDao;
 import lk.ijse.florist_pos.final_project.Entity.Flower;
-import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
-import java.sql.ResultSet;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface FlowerDao extends CrudDao<Flower>{
 
-    public String getNextFlowerId() throws SQLException ;
+     void updateFlowerLifeStatus() throws SQLException ;
 
-    public void updateFlowerLifeStatus() throws SQLException ;
+     boolean reduceQty(String flowerId, int qtyToReduce, Connection connection) throws SQLException ;
+
+     int getTotalFlowerQty() throws SQLException ;
 
 }

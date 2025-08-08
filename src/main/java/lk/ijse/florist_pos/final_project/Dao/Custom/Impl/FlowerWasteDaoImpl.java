@@ -1,6 +1,7 @@
 package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerWasteDao;
+import lk.ijse.florist_pos.final_project.Entity.FlowerWaste;
 import lk.ijse.florist_pos.final_project.dto.FlowerWasteDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
@@ -10,11 +11,16 @@ import java.util.ArrayList;
 
 public class FlowerWasteDaoImpl implements FlowerWasteDao {
 
-    public ArrayList<FlowerWasteDto> getAllWFlower() throws SQLException {
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
+
+    public ArrayList<FlowerWaste> getAll() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select * from flower_waste");
-        ArrayList<FlowerWasteDto> flowerWDTOArrayList = new ArrayList<>();
+        ArrayList<FlowerWaste> flowerWastes = new ArrayList<>();
         while (resultSet.next()){
-            FlowerWasteDto flowerWDto = new FlowerWasteDto(
+            FlowerWaste flowerWaste = new FlowerWaste(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -22,8 +28,28 @@ public class FlowerWasteDaoImpl implements FlowerWasteDao {
                     resultSet.getString(5),
                     resultSet.getString(6)
             );
-            flowerWDTOArrayList.add(flowerWDto);
+            flowerWastes.add(flowerWaste);
         }
-        return flowerWDTOArrayList;
+        return flowerWastes;
+    }
+
+    @Override
+    public boolean save(FlowerWaste entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String Id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(FlowerWaste entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public FlowerWaste search(String number) throws SQLException {
+        return null;
     }
 }

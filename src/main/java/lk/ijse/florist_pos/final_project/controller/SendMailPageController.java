@@ -19,6 +19,8 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SupplierDao;
+import lk.ijse.florist_pos.final_project.Dao.SuperDao;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SupplierDaoImpl;
@@ -56,6 +58,8 @@ public class SendMailPageController {
     @FXML
     private ProgressIndicator stkLoadingEffect;
 
+    final SupplierDao supplierDao = new SupplierDaoImpl();
+
     public ObservableList<String> sampleSubjects = FXCollections.observableArrayList(
             "Request Supply","Thank You for Timely Delivery","Notice of Price Adjustment","Request for Quotation"
             ,"Request for Product Samples","Invitation to Supplier Meeting","Updated Terms and Conditions"
@@ -75,7 +79,7 @@ public class SendMailPageController {
         });
 
         try {
-            List<String> emails = SupplierDaoImpl.getAllSupplierEmails();
+            List<String> emails = supplierDao.getAllSupplierEmails();
             cmbSupplierEmail.setItems(FXCollections.observableArrayList(emails));
         } catch (SQLException e) {
             e.printStackTrace();

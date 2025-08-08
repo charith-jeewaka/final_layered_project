@@ -13,6 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Dao.Custom.StaffDao;
+import lk.ijse.florist_pos.final_project.Entity.Employee;
 import lk.ijse.florist_pos.final_project.dto.EmployeeDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.StaffTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.StaffDaoImpll;
@@ -41,6 +43,7 @@ public class StaffPageController implements Initializable {
     public TextField txtSalary;
     public TextField txtRole;
     StaffDaoImpll staffModel = new StaffDaoImpll();
+    StaffDao staffDao = new StaffDaoImpll();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,21 +66,21 @@ public class StaffPageController implements Initializable {
 
     }
     public void loadTableData() {
-        ArrayList<EmployeeDto> employeeDtoArrayList;
+        ArrayList<Employee> employees;
         try {
-            employeeDtoArrayList = staffModel.getAllEmployees();
+            employees = staffDao.getAll();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         ObservableList<StaffTM> staffTMS = FXCollections.observableArrayList();
-        for (EmployeeDto employeeDto : employeeDtoArrayList) {
+        for (Employee employee : employees) {
             StaffTM staffTM = new StaffTM(
-                    employeeDto.getEmployeeId(),
-                    employeeDto.getEmployeeName(),
-                    employeeDto.getEmployeeSalary(),
-                    employeeDto.getEmployeePosition(),
-                    employeeDto.getEmployeeEmail()
+                    employee.getEmployeeId(),
+                    employee.getEmployeeName(),
+                    employee.getEmployeeSalary(),
+                    employee.getEmployeePosition(),
+                    employee.getEmployeeEmail()
             );
             staffTMS.add(staffTM);
         }
