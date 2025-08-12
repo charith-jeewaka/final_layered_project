@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SupplierDaoImpl implements SupplierDao {
 
+    @Override
     public  List<String> getAllSupplierEmails() throws SQLException {
         String sql = "SELECT supplier_e_mail FROM supplier";
         List<String> emails = new ArrayList<>();

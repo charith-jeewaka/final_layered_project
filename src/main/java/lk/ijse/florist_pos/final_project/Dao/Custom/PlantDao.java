@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public interface PlantDao extends CrudDao<Plant> {
 
     public boolean reduceQty(String plantId, int qtyToReduce, Connection connection) throws SQLException ;
+
     public  int getTotalPlantQty() throws SQLException ;
 
 }

@@ -31,6 +31,7 @@ public class StaffDaoImpll implements StaffDao {
         return "";
     }
 
+    @Override
     public ArrayList<Employee> getAll() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select * from employee");
         ArrayList<Employee> employees = new ArrayList<>();
@@ -68,6 +69,7 @@ public class StaffDaoImpll implements StaffDao {
         return null;
     }
 
+    @Override
     public int getTotalEmployees() throws SQLException {
         String sql = "SELECT COUNT(employee_id) AS employee_count FROM employee";
         ResultSet rs = CrudUtil.execute(sql);

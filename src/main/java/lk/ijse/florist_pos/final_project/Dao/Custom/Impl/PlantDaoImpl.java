@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class PlantDaoImpl implements PlantDao {
 
+    @Override
     public String getNextId() throws SQLException {
 
         ResultSet resultSet = CrudUtil.execute("select plant_id from plant order by plant_id desc limit 1");
@@ -29,6 +30,7 @@ public class PlantDaoImpl implements PlantDao {
         return tableCharacter + "001";
     }
 
+    @Override
     public ArrayList<Plant>getAll() throws SQLException{
         ResultSet resultSet = CrudUtil.execute("select * from plant");
         ArrayList<Plant> plants = new ArrayList<>();
@@ -47,6 +49,7 @@ public class PlantDaoImpl implements PlantDao {
         return plants;
     }
 
+    @Override
     public boolean save(Plant plant) throws SQLException {
         return CrudUtil.execute("insert into plant (plant_id, plant_name, plant_height, plant_price, plant_varient, plant_available_qty) values (?,?,?,?,?,?)",
                 plant.getPlantId(),
@@ -58,6 +61,7 @@ public class PlantDaoImpl implements PlantDao {
                 );
     }
 
+    @Override
     public boolean update(Plant plant) throws SQLException {
         return CrudUtil.execute(
                 "UPDATE plant SET plant_id = ?, plant_name = ?, plant_height = ?, plant_price = ?, " +
@@ -95,6 +99,7 @@ public class PlantDaoImpl implements PlantDao {
 //    }
 
 
+    @Override
     public boolean reduceQty(String plantId, int qtyToReduce, Connection connection) throws SQLException {
         String sql = "UPDATE plant SET plant_available_qty = plant_available_qty - ? WHERE plant_id = ? AND plant_available_qty >= ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -103,6 +108,8 @@ public class PlantDaoImpl implements PlantDao {
         pstm.setInt(3, qtyToReduce);
         return pstm.executeUpdate() > 0;
     }
+
+    @Override
     public  int getTotalPlantQty() throws SQLException {
         String sql = "SELECT COUNT(plant_id) AS plant_count FROM plant";
         ResultSet rs = CrudUtil.execute(sql);

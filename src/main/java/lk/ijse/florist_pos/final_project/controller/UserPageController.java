@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SystemUserDao;
+import lk.ijse.florist_pos.final_project.Entity.SystemUser;
 import lk.ijse.florist_pos.final_project.dto.SystemUserDto;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
 
@@ -41,6 +43,8 @@ public class UserPageController implements Initializable {
     public TextField txtVerificationCode;
     public Button btnSendCode;
 
+    SystemUserDao systemUserDao = new SystemUserDaoImpl();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         imageView.fitWidthProperty().bind(ancUserPage.widthProperty());
@@ -60,7 +64,7 @@ public class UserPageController implements Initializable {
         boolean isValidEmail = email.matches(emailPattern);
         boolean isValidPassword = password.matches(passwordPattern);
 
-        SystemUserDto dto = new SystemUserDto(
+        SystemUser systemUser = new SystemUser(
                 0, 
                 userName,
                 password,
@@ -73,7 +77,7 @@ public class UserPageController implements Initializable {
         if(isValidMobile && isValidEmail && isValidPassword && isValidName) {
 
             try {
-                boolean isSaved = SystemUserDaoImpl.saveUser(dto);
+                boolean isSaved = systemUserDao.save(systemUser);
                 if (isSaved) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

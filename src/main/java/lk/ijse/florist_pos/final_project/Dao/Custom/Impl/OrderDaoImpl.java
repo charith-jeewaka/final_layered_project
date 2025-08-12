@@ -183,23 +183,23 @@ public class OrderDaoImpl implements OrderDao {
         return BigDecimal.ZERO;
     }
 
-    public static Map<String, Double> getDailySales() throws SQLException {
-        String sql = "SELECT DATE(order_date) AS orderDay, " +
-                "SUM(CAST(total_amount AS DECIMAL(10,2))) AS totalSales " +
-                "FROM orders GROUP BY orderDay ORDER BY orderDay";
+//    public static Map<String, Double> getDailySales() throws SQLException {
+//        String sql = "SELECT DATE(order_date) AS orderDay, " +
+//                "SUM(CAST(total_amount AS DECIMAL(10,2))) AS totalSales " +
+//                "FROM orders GROUP BY orderDay ORDER BY orderDay";
+//
+//        ResultSet rs = CrudUtil.execute(sql);
+//
+//        Map<String, Double> dailySales = new LinkedHashMap<>(); // keep insertion order
+//        while (rs.next()) {
+//            String date = rs.getString("orderDay");
+//            double totalSales = rs.getDouble("totalSales");
+//            dailySales.put(date, totalSales);
+//        }
+//        return dailySales;
+//    }
 
-        ResultSet rs = CrudUtil.execute(sql);
-
-        Map<String, Double> dailySales = new LinkedHashMap<>(); // keep insertion order
-        while (rs.next()) {
-            String date = rs.getString("orderDay");
-            double totalSales = rs.getDouble("totalSales");
-            dailySales.put(date, totalSales);
-        }
-        return dailySales;
-    }
-
-    public static double getTodayTotalSale() throws SQLException {
+    public static double getTodayTotalSaleForDashBoard() throws SQLException {
         String sql = "SELECT SUM(CAST(total_bill AS DECIMAL(10,2))) AS today_sales FROM order_item_details WHERE DATE(order_date) = CURDATE()";
 
         ResultSet rs = CrudUtil.execute(sql);

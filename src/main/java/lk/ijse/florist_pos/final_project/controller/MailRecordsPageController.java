@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
+import lk.ijse.florist_pos.final_project.Entity.SentEmail;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.SentEmailsTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
@@ -32,6 +34,8 @@ public class MailRecordsPageController implements Initializable {
     public TableColumn<SentEmailsTM, JFXButton> colMailDelete;
     public AnchorPane ancMailLog;
     public ImageView imageView;
+
+    SentEmailDao sentEmailDao = new SentEmailDaoImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,17 +58,17 @@ public class MailRecordsPageController implements Initializable {
         ObservableList<SentEmailsTM> tmList = FXCollections.observableArrayList();
 
         try {
-            List<SentEmailDto> allEmails = SentEmailDaoImpl.getAllSentEmails();
-            for (SentEmailDto dto : allEmails) {
+            List<SentEmail> sentEmails = sentEmailDao.getAll();
+            for (SentEmail sentEmail : sentEmails) {
                 JFXButton viewBtn = new JFXButton("View");
                 viewBtn.setStyle("-fx-background-color: #2ed573; -fx-text-fill: #ffffff;");
-                viewBtn.setOnAction(e -> showEmailPopup(dto.getBody()));
+                viewBtn.setOnAction(e -> showEmailPopup(sentEmail.getBody()));
 
                 JFXButton deleteBtn = new JFXButton("Delete");
                 deleteBtn.setStyle("-fx-background-color: #ff6b81; -fx-text-fill: white;");
                 deleteBtn.setOnAction(e -> {
                     try {
-                        boolean isDeleted = SentEmailDaoImpl.deleteSentEmail(dto.getTimeStamp());
+                        boolean isDeleted = sentEmailDao.delete(sentEmail.getTimeStamp());
                         if (isDeleted) loadAllEmails();
                     } catch (SQLException ex) {
                         ex.printStackTrace();
@@ -72,10 +76,10 @@ public class MailRecordsPageController implements Initializable {
                 });
 
                 SentEmailsTM tm = new SentEmailsTM(
-                        dto.getRecipientEmail(),
-                        dto.getSubject(),
-                        dto.getBody(),
-                        dto.getTimeStamp(),
+                        sentEmail.getRecipientEmail(),
+                        sentEmail.getSubject(),
+                        sentEmail.getBody(),
+                        sentEmail.getTimeStamp(),
                         viewBtn,
                         deleteBtn
                 );

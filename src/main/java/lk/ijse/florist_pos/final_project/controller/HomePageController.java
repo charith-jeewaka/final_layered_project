@@ -41,7 +41,7 @@ public class HomePageController implements Initializable {
         try {
             double yesterdaySale = OrderDaoImpl.getYesterdayTotalSale();
             lblYesterdaySale.setText(String.valueOf(yesterdaySale));
-            double todaySale = OrderDaoImpl.getTodayTotalSale();
+            double todaySale = OrderDaoImpl.getTodayTotalSaleForDashBoard();
             lblTodaySale.setText(String.valueOf(todaySale));
             int totalPlants = plantDao.getTotalPlantQty();
             lblTotalPlants.setText(String.valueOf(totalPlants));

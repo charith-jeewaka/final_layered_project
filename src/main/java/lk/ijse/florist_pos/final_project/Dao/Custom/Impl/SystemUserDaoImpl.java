@@ -8,14 +8,16 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SystemUserDao;
+import lk.ijse.florist_pos.final_project.Entity.SystemUser;
 import lk.ijse.florist_pos.final_project.controller.DashboardController;
 import lk.ijse.florist_pos.final_project.controller.LoginScreenController;
-import lk.ijse.florist_pos.final_project.dto.SystemUserDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class SystemUserDaoImpl implements SystemUserDao {
@@ -63,6 +65,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
     }
 
 
+    @Override
     public boolean validateUserForPasswordReset(String id, String userName, String role, String mobile, String email, String nic) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -84,6 +87,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
         }
     }
 
+    @Override
     public boolean updateUserPassword(String userId, String newPassword) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -99,17 +103,43 @@ public class SystemUserDaoImpl implements SystemUserDao {
         }
     }
 
-    public static boolean saveUser(SystemUserDto dto) throws Exception {
+    @Override
+    public boolean save(SystemUser systemUser) throws SQLException {
         String sql = "INSERT INTO system_user (user_name, password, user_role, user_mobile, user_email, user_nic) VALUES (?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(
                 sql,
-                dto.getUserName(),
-                dto.getPassword(),
-                dto.getUserRole(),
-                dto.getUserMobile(),
-                dto.getUserEmail(),
-                dto.getUserNic()
+                systemUser.getUserName(),
+                systemUser.getPassword(),
+                systemUser.getUserRole(),
+                systemUser.getUserMobile(),
+                systemUser.getUserEmail(),
+                systemUser.getUserNic()
         );
+    }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
+
+    @Override
+    public ArrayList<SystemUser> getAll() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean delete(String Id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(SystemUser entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public SystemUser search(String number) throws SQLException {
+        return null;
     }
 
 }

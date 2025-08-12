@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
+import lk.ijse.florist_pos.final_project.Bo.Custom.impl.CustomerBoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
 import lk.ijse.florist_pos.final_project.Entity.Customer;
 import lk.ijse.florist_pos.final_project.dto.CustomerDto;
@@ -56,6 +58,8 @@ public class CustomerPageController implements Initializable {
     public AnchorPane ancCustomer;
     public ImageView imageView;
 
+    CustomerBo customerBo = new CustomerBoImpl();
+
     CustomerDao customerDao = new CustomerDaoImpl();
 
 
@@ -87,7 +91,7 @@ public class CustomerPageController implements Initializable {
     private void loadTableData() throws SQLException {
 
         tblCustomer.setItems(FXCollections.observableArrayList(
-                customerDao.getAll().stream()
+                customerBo.getAll().stream()
                         .map(customerDTO -> new CustomerTM(
                                 customerDTO.getCustomerId(),
                                 customerDTO.getCustomerName(),

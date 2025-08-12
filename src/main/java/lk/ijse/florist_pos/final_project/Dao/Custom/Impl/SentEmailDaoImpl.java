@@ -2,6 +2,7 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
+import lk.ijse.florist_pos.final_project.Entity.SentEmail;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
@@ -12,48 +13,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SentEmailDaoImpl implements SentEmailDao {
-
-    public static boolean saveEmail(SentEmailDto dto) {
-        Connection con = null;
-        PreparedStatement stm = null;
-
+    @Override
+    public boolean save(SentEmail sentEmail) {
         try {
-            con = DBConnection.getInstance().getConnection();
-            String sql = "INSERT INTO sent_emails (recipient_email, subject, body) VALUES (?, ?, ?)";
-            stm = con.prepareStatement(sql);
-            stm.setString(1, dto.getRecipientEmail());
-            stm.setString(2, dto.getSubject());
-            stm.setString(3, dto.getBody());
-            return stm.executeUpdate() > 0;
-        } catch (Exception e) {
+            return CrudUtil.execute(
+                    "INSERT INTO sent_emails (recipient_email, subject, body) VALUES (?, ?, ?)",
+                    sentEmail.getRecipientEmail(),
+                    sentEmail.getSubject(),
+                    sentEmail.getBody()
+            );
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
-                if (stm != null) stm.close();
-                // Do NOT close `con` here because it's shared!
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public static ArrayList<SentEmailDto> getAllSentEmails() throws SQLException {
+    @Override
+    public ArrayList<SentEmail> getAll() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM sent_emails");
-        ArrayList<SentEmailDto> sentEmailDtoArrayList = new ArrayList<>();
+        ArrayList<SentEmail> sentEmails = new ArrayList<>();
         while (resultSet.next()) {
-            SentEmailDto sentEmailDto = new SentEmailDto(
+            SentEmail sentEmail = new SentEmail(
                     resultSet.getString("recipient_email"),
                     resultSet.getString("subject"),
                     resultSet.getString("body"),
                     resultSet.getString("sent_at")
             );
-            sentEmailDtoArrayList.add(sentEmailDto);
+            sentEmails.add(sentEmail);
         }
-        return sentEmailDtoArrayList;
+        return sentEmails;
     }
 
-    public static boolean deleteSentEmail(String timeStamp) throws SQLException {
+    @Override
+    public  boolean delete(String timeStamp) throws SQLException {
         return CrudUtil.execute("DELETE FROM sent_emails WHERE sent_at = ?", timeStamp);
+    }
+
+    @Override
+    public boolean update(SentEmail entity) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public SentEmail search(String number) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
     }
 }

@@ -19,8 +19,10 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SupplierDao;
 import lk.ijse.florist_pos.final_project.Dao.SuperDao;
+import lk.ijse.florist_pos.final_project.Entity.SentEmail;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SupplierDaoImpl;
@@ -59,6 +61,7 @@ public class SendMailPageController {
     private ProgressIndicator stkLoadingEffect;
 
     final SupplierDao supplierDao = new SupplierDaoImpl();
+    SentEmailDao sentEmailDao = new SentEmailDaoImpl();
 
     public ObservableList<String> sampleSubjects = FXCollections.observableArrayList(
             "Request Supply","Thank You for Timely Delivery","Notice of Price Adjustment","Request for Quotation"
@@ -148,14 +151,18 @@ public class SendMailPageController {
                     alert.setTitle("Email Sent");
                     alert.setHeaderText(null);
                     alert.setContentText("The email has been sent successfully.");
-                    SentEmailDto emailDTO = new SentEmailDto(
+                    SentEmail sentEmail = new SentEmail(
                             txtTo.getText(),
                             txtSubject.getText(),
                             txaBody.getText(),
                             null
 
                     );
-                    SentEmailDaoImpl.saveEmail(emailDTO);
+                    try {
+                        sentEmailDao.save(sentEmail);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     alert.showAndWait();
 
                     txtSubject.clear();
