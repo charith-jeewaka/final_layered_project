@@ -10,9 +10,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.florist_pos.final_project.Entity.FlowerWaste;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.FlowerWasteBO;
+import lk.ijse.florist_pos.final_project.dto.FlowerWasteDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerWasteTm;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerWasteDaoImpl;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class ItemWastePageController implements Initializable {
     public ImageView imageView;
     public AnchorPane ancWaste;
 
-    FlowerWasteDaoImpl flowerWasteModel = new FlowerWasteDaoImpl();
+
+    FlowerWasteBO flowerWasteBO =
+            (FlowerWasteBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.FLOWER_WASTE);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,16 +61,16 @@ public class ItemWastePageController implements Initializable {
     }
 
     public void loadTableData() throws SQLException {
-        ArrayList<FlowerWaste> flowerWastes = flowerWasteModel.getAll();
+        ArrayList<FlowerWasteDto> flowerWastes = flowerWasteBO.getAllWastedFlowers();
         ObservableList<FlowerWasteTm> flowerWTMS = FXCollections.observableArrayList();
-        for (FlowerWaste flowerWaste : flowerWastes) {
+        for (FlowerWasteDto flowerWasteDto : flowerWastes) {
             FlowerWasteTm flowerWTM = new FlowerWasteTm(
-                    flowerWaste.getWastedId(),
-                    flowerWaste.getFlowerId(),
-                    flowerWaste.getFlowerName(),
-                    flowerWaste.getFlowerQty(),
-                    flowerWaste.getReason(),
-                    flowerWaste.getWasteDate()
+                    flowerWasteDto.getWastedId(),
+                    flowerWasteDto.getFlowerId(),
+                    flowerWasteDto.getFlowerName(),
+                    flowerWasteDto.getFlowerQty(),
+                    flowerWasteDto.getReason(),
+                    flowerWasteDto.getWasteDate()
             );
             flowerWTMS.add(flowerWTM);
         }
