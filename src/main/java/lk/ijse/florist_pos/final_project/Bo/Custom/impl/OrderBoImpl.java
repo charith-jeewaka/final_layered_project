@@ -29,11 +29,10 @@ public class OrderBoImpl implements OrderBO {
         boolean isSuccess = false;
 
         try {
-            connection.setAutoCommit(false); // Start transaction
+            connection.setAutoCommit(false);
 
             for (OrderDetailsDto dto : orderDetailsList) {
 
-                // Call DAO save method instead of writing the query here
                 OrderDetails orderDetails = new OrderDetails(
                         dto.getOrderId(),
                         dto.getCustomerName(),
@@ -46,12 +45,11 @@ public class OrderBoImpl implements OrderBO {
                         dto.getTotalBill()
                 );
 
-                if (!orderDao.save(orderDetails)) { // DAO method
+                if (!orderDao.save(orderDetails)) {
                     connection.rollback();
                     return false;
                 }
 
-                // 2. Reduce item quantity
                 String itemId = dto.getItemId();
                 int qtyToReduce = Integer.parseInt(dto.getItemQty());
 
@@ -61,19 +59,17 @@ public class OrderBoImpl implements OrderBO {
                         return false;
                     }
                 } else if (itemId.startsWith("F")) {
-                    if (!flowerDao.reduceQty(itemId, qtyToReduce, connection)) {
+                    if (!flowerDao.reduceQty(itemId, qtyToReduce)) {
                         connection.rollback();
                         return false;
                     }
                 }
             }
 
-            // Insert order summary
             if (!OrderDaoImpl.insertOrderSummary()) {
                 connection.rollback();
                 return false;
             }
-
             connection.commit();
             isSuccess = true;
 
@@ -83,9 +79,6 @@ public class OrderBoImpl implements OrderBO {
         } finally {
             connection.setAutoCommit(true);
         }
-
         return isSuccess;
     }
-
-
 }

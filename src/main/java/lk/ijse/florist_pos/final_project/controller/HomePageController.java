@@ -6,6 +6,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
+import lk.ijse.florist_pos.final_project.Bo.Custom.FlowerBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
@@ -29,7 +32,11 @@ public class HomePageController implements Initializable {
     public BarChart<String, Number> barChart;
     public CategoryAxis barDates;
     public NumberAxis barSales;
-    FlowerDao flowerDao = new FlowerDaoImpl();
+
+
+FlowerBO flowerBO =
+        (FlowerBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.FLOWER);
+
     PlantDao plantDao = new PlantDaoImpl();
     StaffDao staffDao = new StaffDaoImpll();
 
@@ -47,7 +54,7 @@ public class HomePageController implements Initializable {
             lblTotalPlants.setText(String.valueOf(totalPlants));
             int totalEmployee = staffDao.getTotalEmployees();
             lblEmployees.setText(String.valueOf(totalEmployee));
-            int totalFlowers = flowerDao.getTotalFlowerQty();
+            int totalFlowers = flowerBO.getTotalFlowerQty();
             lblTotalFlowers.setText(String.valueOf(totalFlowers));
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -15,7 +15,7 @@ public class CustomerBoImpl implements CustomerBo{
             (CustomerDao) DaoFactory.getInstance().getDAO(DaoFactory.DaoTypes.CUSTOMER);
 
     @Override
-    public ArrayList<CustomerDto> getAll() throws SQLException{
+    public ArrayList<CustomerDto> getAllCustomers() throws SQLException{
         ArrayList<Customer> customers = customerDao.getAll();
         ArrayList<CustomerDto> customerDtos = new ArrayList<>();
         for (Customer customer:customers){

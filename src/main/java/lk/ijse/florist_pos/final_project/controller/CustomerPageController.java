@@ -84,7 +84,7 @@ public class CustomerPageController implements Initializable {
     private void loadTableData() throws SQLException {
 
         tblCustomer.setItems(FXCollections.observableArrayList(
-                customerBo.getAll().stream()
+                customerBo.getAllCustomers().stream()
                         .map(customerDTO -> new CustomerTM(
                                 customerDTO.getCustomerId(),
                                 customerDTO.getCustomerName(),

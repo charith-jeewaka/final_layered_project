@@ -11,9 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.florist_pos.final_project.Entity.Flower;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.FlowerBO;
+import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerTM;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -51,7 +52,8 @@ public class FlowerPageController implements Initializable {
     public JFXButton btnSaveFlower;
     public ImageView imageView;
 
-    FlowerDaoImpl flowerModel = new FlowerDaoImpl();
+    FlowerBO flowerBO =
+            (FlowerBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.FLOWER);
 
     String namePattern = "^[A-Za-z ]+$";
     String pricePattern = "^\\d+(\\.\\d{2})?$";
@@ -153,25 +155,25 @@ public class FlowerPageController implements Initializable {
     }
 
     public void loadTableData() throws SQLException {
-        ArrayList<Flower> flowers = flowerModel.getAll();
+        ArrayList<FlowerDto> flowerDtos = flowerBO.getAllFlowers();
         ObservableList<FlowerTM> flowerTMS = FXCollections.observableArrayList();
-        for (Flower flower : flowers) {
+        for (FlowerDto flowerDto : flowerDtos) {
             FlowerTM flowerTM = new FlowerTM(
-                    flower.getFlowerId(),
-                    flower.getFlowerName(),
-                    flower.getFlowerCategory(),
-                    flower.getFlowerPrice(),
-                    flower.getFlowerStatus(),
-                    flower.getFlowerAvailableQty(),
-                    flower.getFlowerEnteredTime()
+                    flowerDto.getFlowerId(),
+                    flowerDto.getFlowerName(),
+                    flowerDto.getFlowerCategory(),
+                    flowerDto.getFlowerPrice(),
+                    flowerDto.getFlowerStatus(),
+                    flowerDto.getFlowerAvailableQty(),
+                    flowerDto.getFlowerEnteredTime()
             );
             flowerTMS.add(flowerTM);
         }
         tblFlower.setItems(flowerTMS);
     }
 
-    public void loadNextFlowerId() throws SQLException {
-        String nextId = flowerModel.getNextId();
+    public void loadNextFlowerId() throws SQLException, ClassNotFoundException {
+        String nextId = flowerBO.getNextFlowerId();
         lblFlowerId.setText(nextId);
     }
 
@@ -187,7 +189,7 @@ public class FlowerPageController implements Initializable {
         boolean isValidPrice = price.matches(pricePattern);
         boolean isValidQty = qty.matches(qtyPattern);
 
-        Flower flower = new Flower(
+        FlowerDto flowerDto = new FlowerDto(
                 id,
                 name,
                 category,
@@ -199,7 +201,7 @@ public class FlowerPageController implements Initializable {
 
         if (isValidName && isValidCategory && isValidPrice && isValidQty) {
             try {
-                boolean isSaved = flowerModel.save(flower);
+                boolean isSaved = flowerBO.saveFlower(flowerDto);
 
                 if (isSaved) {
                     resetFlowerPage();
@@ -211,6 +213,8 @@ public class FlowerPageController implements Initializable {
             } catch (SQLException e){
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Database Error.").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }else{
             new Alert(Alert.AlertType.ERROR,"Invalid input data.").show();
@@ -220,7 +224,7 @@ public class FlowerPageController implements Initializable {
 
     public void resetFlowerPage(){
         try {
-            flowerModel.updateFlowerLifeStatus();
+            flowerBO.updateFlowerLifeStatus();
             loadTableData();
             loadNextFlowerId();
             txtFlowerName.clear();
@@ -241,6 +245,8 @@ public class FlowerPageController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong.").show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -260,7 +266,7 @@ public class FlowerPageController implements Initializable {
             String flowerId = lblFlowerId.getText();
             try {
 
-                if (flowerModel.delete(flowerId)) {
+                if (flowerBO.deleteFlower(flowerId)) {
                     resetFlowerPage();
                     new Alert(Alert.AlertType.INFORMATION, "Flower deleted successfully.").show();
                 } else {
@@ -287,7 +293,7 @@ public class FlowerPageController implements Initializable {
         boolean isValidPrice = price.matches(pricePattern);
         boolean isValidQty = qty.matches(qtyPattern);
 
-        Flower flower = new Flower(
+        FlowerDto flowerDto = new FlowerDto(
                 id,
                 name,
                 category,
@@ -298,7 +304,7 @@ public class FlowerPageController implements Initializable {
         );
         if (isValidName && isValidCategory && isValidPrice && isValidQty) {
             try {
-                boolean isUpdated = flowerModel.update(flower);
+                boolean isUpdated = flowerBO.updateFlower(flowerDto);
                 if (isUpdated) {
                     new Alert(Alert.AlertType.INFORMATION, "Flower updated successfully.").show();
                     resetFlowerPage();
@@ -308,6 +314,8 @@ public class FlowerPageController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Database Error.").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }else {
             new Alert(Alert.AlertType.ERROR, "Invalid input data.").show();
