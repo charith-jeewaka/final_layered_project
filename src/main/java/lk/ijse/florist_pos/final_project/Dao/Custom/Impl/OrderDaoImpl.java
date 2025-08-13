@@ -130,69 +130,69 @@ public class OrderDaoImpl implements OrderDao {
 //        return isSuccess;
 //    }
 
-    public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
-        final FlowerDao flowerDao = new FlowerDaoImpl();
-        Connection connection = DBConnection.getInstance().getConnection();
-        boolean isSuccess = false;
-
-        try {
-            connection.setAutoCommit(false); // Start transaction
-
-            for (OrderDetailsDto dto : orderDetailsList) {
-
-                // Call DAO save method instead of writing the query here
-                OrderDetails orderDetails = new OrderDetails(
-                        dto.getOrderId(),
-                        dto.getCustomerName(),
-                        dto.getItemName(),
-                        dto.getItemId(),
-                        dto.getPaymentType(),
-                        dto.getItemQty(),
-                        dto.getTotalAmount(),
-                        dto.getHandleBy(),
-                        dto.getTotalBill()
-                );
-
-                if (!save(orderDetails)) { // DAO method
-                    connection.rollback();
-                    return false;
-                }
-
-                // 2. Reduce item quantity
-                String itemId = dto.getItemId();
-                int qtyToReduce = Integer.parseInt(dto.getItemQty());
-
-                if (itemId.startsWith("P")) {
-                    if (!plantDao.reduceQty(itemId, qtyToReduce, connection)) {
-                        connection.rollback();
-                        return false;
-                    }
-                } else if (itemId.startsWith("F")) {
-                    if (!flowerDao.reduceQty(itemId, qtyToReduce, connection)) {
-                        connection.rollback();
-                        return false;
-                    }
-                }
-            }
-
-            // Insert order summary
-            if (!insertOrderSummary()) {
-                connection.rollback();
-                return false;
-            }
-
-            connection.commit();
-            isSuccess = true;
-
-        } catch (SQLException e) {
-            connection.rollback();
-            e.printStackTrace();
-        } finally {
-            connection.setAutoCommit(true);
-        }
-
-        return isSuccess;
-    }
+//    public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
+//        final FlowerDao flowerDao = new FlowerDaoImpl();
+//        Connection connection = DBConnection.getInstance().getConnection();
+//        boolean isSuccess = false;
+//
+//        try {
+//            connection.setAutoCommit(false); // Start transaction
+//
+//            for (OrderDetailsDto dto : orderDetailsList) {
+//
+//                // Call DAO save method instead of writing the query here
+//                OrderDetails orderDetails = new OrderDetails(
+//                        dto.getOrderId(),
+//                        dto.getCustomerName(),
+//                        dto.getItemName(),
+//                        dto.getItemId(),
+//                        dto.getPaymentType(),
+//                        dto.getItemQty(),
+//                        dto.getTotalAmount(),
+//                        dto.getHandleBy(),
+//                        dto.getTotalBill()
+//                );
+//
+//                if (!save(orderDetails)) { // DAO method
+//                    connection.rollback();
+//                    return false;
+//                }
+//
+//                // 2. Reduce item quantity
+//                String itemId = dto.getItemId();
+//                int qtyToReduce = Integer.parseInt(dto.getItemQty());
+//
+//                if (itemId.startsWith("P")) {
+//                    if (!plantDao.reduceQty(itemId, qtyToReduce, connection)) {
+//                        connection.rollback();
+//                        return false;
+//                    }
+//                } else if (itemId.startsWith("F")) {
+//                    if (!flowerDao.reduceQty(itemId, qtyToReduce, connection)) {
+//                        connection.rollback();
+//                        return false;
+//                    }
+//                }
+//            }
+//
+//            // Insert order summary
+//            if (!insertOrderSummary()) {
+//                connection.rollback();
+//                return false;
+//            }
+//
+//            connection.commit();
+//            isSuccess = true;
+//
+//        } catch (SQLException e) {
+//            connection.rollback();
+//            e.printStackTrace();
+//        } finally {
+//            connection.setAutoCommit(true);
+//        }
+//
+//        return isSuccess;
+//    }
 
 
     public static boolean insertOrderSummary() throws SQLException {

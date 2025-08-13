@@ -17,7 +17,6 @@ import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
 import lk.ijse.florist_pos.final_project.Bo.Custom.impl.CustomerBoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
 import lk.ijse.florist_pos.final_project.Entity.Customer;
-import lk.ijse.florist_pos.final_project.dto.CustomerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CustomerTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
 

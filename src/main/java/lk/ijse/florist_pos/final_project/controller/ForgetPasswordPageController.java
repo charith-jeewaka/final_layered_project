@@ -45,7 +45,6 @@ public class ForgetPasswordPageController {
             String role = txtRole.getText();
 
             SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
-            SavePasswordPageController savePasswordPageController = new SavePasswordPageController();
 
             boolean isValid = systemUserModel.validateUserForPasswordReset(userId,username,role,phone,email,nic);
 

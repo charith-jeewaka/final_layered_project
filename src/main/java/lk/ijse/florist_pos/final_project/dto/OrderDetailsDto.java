@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @ToString
 public class OrderDetailsDto {
-
     private String orderId;
     private String customerName;
     private String itemName;
@@ -17,7 +16,6 @@ public class OrderDetailsDto {
     private String itemQty;
     private String totalAmount;
     private String handleBy;
-
     private String totalBill;
 }
 

@@ -11,10 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.Entity.FlowerWaste;
-import lk.ijse.florist_pos.final_project.dto.FlowerWasteDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerWasteTm;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerWasteDaoImpl;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;

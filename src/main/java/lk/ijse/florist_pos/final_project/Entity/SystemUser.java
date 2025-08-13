@@ -15,5 +15,4 @@ public class SystemUser {
     private String userMobile;
     private String userEmail;
     private String userNic;
-
 }

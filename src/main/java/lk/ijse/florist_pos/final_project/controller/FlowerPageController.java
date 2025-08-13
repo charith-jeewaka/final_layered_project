@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.Entity.Flower;
-import lk.ijse.florist_pos.final_project.dto.FlowerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.FlowerTM;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 

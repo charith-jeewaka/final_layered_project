@@ -10,9 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SystemUserDao;
 import lk.ijse.florist_pos.final_project.Entity.SystemUser;
-import lk.ijse.florist_pos.final_project.dto.SystemUserDto;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 

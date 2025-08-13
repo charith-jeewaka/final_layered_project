@@ -6,7 +6,7 @@ public  class DaoFactory {
     private static DaoFactory daoFactory;
     private DaoFactory(){}
 
-    private static DaoFactory getInstance(){
+    public static DaoFactory getInstance(){
         return (daoFactory == null)? new DaoFactory():daoFactory;
     }
 

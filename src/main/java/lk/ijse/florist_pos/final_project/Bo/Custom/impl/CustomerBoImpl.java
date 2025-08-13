@@ -2,7 +2,6 @@ package lk.ijse.florist_pos.final_project.Bo.Custom.impl;
 
 import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
 import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.DaoFactory;
 import lk.ijse.florist_pos.final_project.Entity.Customer;
 import lk.ijse.florist_pos.final_project.dto.CustomerDto;
@@ -11,7 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerBoImpl implements CustomerBo{
-    CustomerDao customerDao = new CustomerDaoImpl();
+
+    CustomerDao customerDao =
+            (CustomerDao) DaoFactory.getInstance().getDAO(DaoFactory.DaoTypes.CUSTOMER);
 
     public ArrayList<CustomerDto> getAll() throws SQLException{
         ArrayList<Customer> customers = customerDao.getAll();

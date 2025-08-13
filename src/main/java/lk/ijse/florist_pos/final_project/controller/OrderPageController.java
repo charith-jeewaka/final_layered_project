@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import lk.ijse.florist_pos.final_project.Bo.Custom.PlaceOrderBO;
+import lk.ijse.florist_pos.final_project.Bo.Custom.impl.PlaceOrderBoImpl;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CartTm;
@@ -60,6 +62,8 @@ public class OrderPageController implements Initializable {
     public ToggleGroup paymentType = new ToggleGroup();
     public ImageView imageView;
     public AnchorPane ancOrder;
+
+    PlaceOrderBO placeOrderBO = new PlaceOrderBoImpl();
 
 
     @Override
@@ -251,7 +255,7 @@ public class OrderPageController implements Initializable {
 
 
 
-        boolean isPlaced = orderModel.placeOrder(orderDetailsList);
+        boolean isPlaced = placeOrderBO.placeOrder(orderDetailsList);
 
         if (isPlaced) {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Need a Bill ?", ButtonType.YES, ButtonType.NO);

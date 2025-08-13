@@ -1,11 +1,11 @@
 package lk.ijse.florist_pos.final_project.Bo.Custom;
 
+import lk.ijse.florist_pos.final_project.Bo.SuperBO;
 import lk.ijse.florist_pos.final_project.dto.CustomerDto;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CustomerBo {
+public interface CustomerBo extends SuperBO {
      ArrayList<CustomerDto> getAll() throws SQLException ;
 
     }
