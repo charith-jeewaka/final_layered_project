@@ -13,13 +13,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
 import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
-import lk.ijse.florist_pos.final_project.Bo.Custom.impl.CustomerBoImpl;
-import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
-import lk.ijse.florist_pos.final_project.Entity.Customer;
+import lk.ijse.florist_pos.final_project.dto.CustomerDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CustomerTM;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -57,10 +54,8 @@ public class CustomerPageController implements Initializable {
     public AnchorPane ancCustomer;
     public ImageView imageView;
 
-    CustomerBo customerBo = new CustomerBoImpl();
-
-    CustomerDao customerDao = new CustomerDaoImpl();
-
+    CustomerBo customerBo =
+            (CustomerBo) BOFactory.getInstance().getBo(BOFactory.BoTypes.CUSTOMER);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -86,7 +81,6 @@ public class CustomerPageController implements Initializable {
         }
     }
 
-
     private void loadTableData() throws SQLException {
 
         tblCustomer.setItems(FXCollections.observableArrayList(
@@ -102,16 +96,11 @@ public class CustomerPageController implements Initializable {
         ));
     }
 
-
     private void resetPage() {
         try {
             loadTableData();
-            lblCustomerId.setText(customerDao.getNextId());
-
-
+            lblCustomerId.setText(customerBo.getNextCustomerId());
             btnSave.setDisable(false);
-
-
             btnDelete.setDisable(true);
             btnUpdate.setDisable(true);
 
@@ -124,7 +113,6 @@ public class CustomerPageController implements Initializable {
             //new Alert(Alert.AlertType.ERROR, "Something went wrong.").show();
         }
     }
-
 
     public void saveCustomerOnAction(ActionEvent actionEvent) {
 
@@ -139,7 +127,7 @@ public class CustomerPageController implements Initializable {
         boolean isValidEmail = email.matches(emailPattern);
         boolean isValidAddress = address.matches(addressPattern);
 
-        Customer customer = new Customer(
+        CustomerDto customerDto = new CustomerDto(
                 customerId,
                 name,
                 phone,
@@ -150,7 +138,7 @@ public class CustomerPageController implements Initializable {
 
         if (isValidName && isValidPhone && isValidEmail && isValidAddress) {
             try {
-                boolean isSaved = customerDao.save(customer);
+                boolean isSaved = customerBo.saveCustomer(customerDto);
 
                 if (isSaved) {
                     resetPage();
@@ -167,12 +155,12 @@ public class CustomerPageController implements Initializable {
 
     }
 
-    private void loadNextId() throws SQLException {
-        String nextId = customerDao.getNextId();
+    private void loadNextId() throws SQLException, ClassNotFoundException {
+        String nextId = customerBo.getNextCustomerId();
         lblCustomerId.setText(nextId);
     }
 
-    public void updateCustomerOnAction(ActionEvent actionEvent) throws SQLException {
+    public void updateCustomerOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
         boolean isValidName = txtName.getText().matches(namePattern);
         boolean isValidPhone = txtPhone.getText().matches(phonePattern);
@@ -186,8 +174,8 @@ public class CustomerPageController implements Initializable {
         String address = txtAddress.getText();
 
         if (isValidName && isValidPhone && isValidEmail && isValidAddress) {
-            Customer customer = new Customer(customerId,name,phone,email,address,null);
-            customerDao.update(customer);
+            CustomerDto customerDto = new CustomerDto(customerId,name,phone,email,address,null);
+            customerBo.updateCustomer(customerDto);
             resetPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully.").show();
         }else {
@@ -196,25 +184,25 @@ public class CustomerPageController implements Initializable {
 
     }
 
-    public void deleteCustomerOnAction(ActionEvent actionEvent) throws SQLException {
+    public void deleteCustomerOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure to delete this customer?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult() != ButtonType.YES) {
             return;
         }
-        customerDao.delete(lblCustomerId.getText() );
+        customerBo.deleteCustomer(lblCustomerId.getText() );
         resetPage();
         new Alert(Alert.AlertType.INFORMATION, "Customer deleted successfully.").show();
     }
 
     public void searchCustomerOnAction(ActionEvent actionEvent) throws SQLException {
         try {
-            Customer customer = customerDao.search(txtSearchCustomer.getText());
-            txtName.setText(customer.getCustomerName());
-            txtPhone.setText(customer.getMobileNumber());
-            txtEmail.setText(customer.getEmail());
-            txtAddress.setText(customer.getCustomerAddress());
-            lblCustomerId.setText(customer.getCustomerId());
+            CustomerDto customerDto = customerBo.searchCustomerByPhone(txtSearchCustomer.getText());
+            txtName.setText(customerDto.getCustomerName());
+            txtPhone.setText(customerDto.getMobileNumber());
+            txtEmail.setText(customerDto.getEmail());
+            txtAddress.setText(customerDto.getCustomerAddress());
+            lblCustomerId.setText(customerDto.getCustomerId());
             btnSave.setDisable(true);
             btnDelete.setDisable(false);
             btnUpdate.setDisable(false);

@@ -2,14 +2,11 @@ package lk.ijse.florist_pos.final_project.Bo.Custom.impl;
 
 import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
-import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.OrderDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
+import lk.ijse.florist_pos.final_project.Dao.DaoFactory;
 import lk.ijse.florist_pos.final_project.Entity.OrderDetails;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 
@@ -19,9 +16,12 @@ import java.util.List;
 
 public class OrderBoImpl implements OrderBO {
 
-    OrderDao orderDao = new  OrderDaoImpl();
-    PlantDao plantDao = new PlantDaoImpl();
-    FlowerDao flowerDao = new FlowerDaoImpl();
+      OrderDao orderDao =
+            (OrderDao) DaoFactory.getInstance().getDAO(DaoFactory.DaoTypes.ORDER);
+      PlantDao plantDao =
+            (PlantDao) DaoFactory.getInstance().getDAO(DaoFactory.DaoTypes.PLANT);
+      FlowerDao flowerDao =
+            (FlowerDao) DaoFactory.getInstance().getDAO(DaoFactory.DaoTypes.FLOWER);
 
     @Override
     public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
