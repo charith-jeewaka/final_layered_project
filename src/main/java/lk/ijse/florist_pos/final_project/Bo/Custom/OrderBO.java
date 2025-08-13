@@ -5,7 +5,7 @@ import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface PlaceOrderBO extends SuperBO {
+public interface OrderBO extends SuperBO {
 
     boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException ;
 

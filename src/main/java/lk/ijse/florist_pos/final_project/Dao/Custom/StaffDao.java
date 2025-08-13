@@ -7,5 +7,4 @@ import java.sql.SQLException;
 
 public interface StaffDao extends CrudDao<Employee> {
     int getTotalEmployees() throws SQLException ;
-
 }

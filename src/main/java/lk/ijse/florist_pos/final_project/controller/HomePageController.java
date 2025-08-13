@@ -39,7 +39,7 @@ public class HomePageController implements Initializable {
         imageView.fitWidthProperty().bind(ancHome.widthProperty());
         imageView.fitHeightProperty().bind(ancHome.heightProperty());
         try {
-            double yesterdaySale = OrderDaoImpl.getYesterdayTotalSale();
+            double yesterdaySale = OrderDaoImpl.getYesterdayTotalSaleForDashBoard();
             lblYesterdaySale.setText(String.valueOf(yesterdaySale));
             double todaySale = OrderDaoImpl.getTodayTotalSaleForDashBoard();
             lblTodaySale.setText(String.valueOf(todaySale));

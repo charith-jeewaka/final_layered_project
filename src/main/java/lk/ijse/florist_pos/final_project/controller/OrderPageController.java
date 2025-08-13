@@ -11,8 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-import lk.ijse.florist_pos.final_project.Bo.Custom.PlaceOrderBO;
-import lk.ijse.florist_pos.final_project.Bo.Custom.impl.PlaceOrderBoImpl;
+import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
+import lk.ijse.florist_pos.final_project.Bo.Custom.impl.OrderBoImpl;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CartTm;
@@ -63,7 +63,7 @@ public class OrderPageController implements Initializable {
     public ImageView imageView;
     public AnchorPane ancOrder;
 
-    PlaceOrderBO placeOrderBO = new PlaceOrderBoImpl();
+    OrderBO placeOrderBO = new OrderBoImpl();
 
 
     @Override
@@ -222,7 +222,6 @@ public class OrderPageController implements Initializable {
             orderDetailsList.add(dto);
         }
 
-        ////////////////////////
         if (rbtnCash.isSelected()) {
             String cashText = txtCash.getText();
 
@@ -250,10 +249,7 @@ public class OrderPageController implements Initializable {
             lblBalence.setText(String.format("%.2f", balance));
         }else {
             lblBalence.setText("");
-
         }
-
-
 
         boolean isPlaced = placeOrderBO.placeOrder(orderDetailsList);
 
@@ -272,10 +268,8 @@ public class OrderPageController implements Initializable {
         }
     }
 
-
-
     private void loadNextOrderId() throws SQLException {
-        String nextOid = orderModel.getNextOrderId();
+        String nextOid = orderModel.getNextId();
         lblOrderId.setText(nextOid);
     }
 

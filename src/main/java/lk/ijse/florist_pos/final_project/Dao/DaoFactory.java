@@ -7,7 +7,10 @@ public  class DaoFactory {
     private DaoFactory(){}
 
     public static DaoFactory getInstance(){
-        return (daoFactory == null)? new DaoFactory():daoFactory;
+        if (daoFactory == null) {
+            daoFactory = new DaoFactory();
+        }
+        return daoFactory;
     }
 
     public enum DaoTypes{
@@ -28,6 +31,22 @@ public  class DaoFactory {
                 return new CustomerDaoImpl();
             case FLOWER:
                 return new FlowerDaoImpl();
+            case FLOWER_WASTE:
+                return new FlowerWasteDaoImpl();
+            case ORDER:
+                return new OrderDaoImpl();
+            case PLANT:
+                return new PlantDaoImpl();
+            case QUERY:
+                return new QueryDaoImpl();
+            case SENT_EMAIL:
+                return new SentEmailDaoImpl();
+            case STAFF:
+                return new StaffDaoImpll();
+            case SUPPLIER:
+                return new SupplierDaoImpl();
+            case SYSTEM_USER:
+                return new SystemUserDaoImpl();
             default:
                 return null;
         }

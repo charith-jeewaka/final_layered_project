@@ -1,29 +1,19 @@
 package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
-import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
-import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.OrderDao;
-import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.Entity.OrderDetails;
-import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 public class OrderDaoImpl implements OrderDao {
-    final FlowerDaoImpl flowerModel = new FlowerDaoImpl();
-    final PlantDao plantDao = new PlantDaoImpl();
 
-    public String getNextOrderId() throws SQLException {
+    @Override
+    public String getNextId() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select order_id from orders order by order_id desc limit 1");
         char tableCharacter = 'O';
         if (resultSet.next()) {
@@ -62,137 +52,6 @@ public class OrderDaoImpl implements OrderDao {
         }
         return null;
     }
-
-//    public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
-//        final FlowerDao flowerDao = new FlowerDaoImpl();
-//        Connection connection = DBConnection.getInstance().getConnection();
-//        boolean isSuccess = false;
-//
-//        try {
-//            connection.setAutoCommit(false); // Start transaction
-//
-//            // 1. Insert orders
-//            String orderSql = "INSERT INTO orders (order_id, customer_name, item_name, item_id, payment_type, item_qty, total_amount, handled_by, total_bill) " +
-//                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//            PreparedStatement orderPstm = connection.prepareStatement(orderSql);
-//
-//            for (OrderDetailsDto dto : orderDetailsList) {
-//                orderPstm.setString(1, dto.getOrderId());
-//                orderPstm.setString(2, dto.getCustomerName());
-//                orderPstm.setString(3, dto.getItemName());
-//                orderPstm.setString(4, dto.getItemId());
-//                orderPstm.setString(5, dto.getPaymentType());
-//                orderPstm.setString(6, dto.getItemQty());
-//                orderPstm.setString(7, dto.getTotalAmount());
-//                orderPstm.setString(8, dto.getHandleBy());
-//                orderPstm.setString(9, dto.getTotalBill());
-//
-//
-//                orderPstm.addBatch();
-//
-//                // 2. Reduce item quantity
-//                String itemId = dto.getItemId();
-//                int qtyToReduce = Integer.parseInt(dto.getItemQty());
-//
-//                if (itemId.startsWith("P")) {
-//                    // It's a plant
-//                    if (!plantDao.reduceQty(itemId, qtyToReduce, connection)) {
-//                        connection.rollback();
-//                        return false;
-//                    }
-//                } else if (itemId.startsWith("F")) {
-//                    // It's a flower
-//                    if (!flowerDao.reduceQty(itemId, qtyToReduce, connection)) {
-//                        connection.rollback();
-//                        return false;
-//                    }
-//                }
-//            }
-//
-//            int[] orderResult = orderPstm.executeBatch();
-//
-//            // Insert order summary
-//            if (!insertOrderSummary()) {
-//                connection.rollback();
-//                return false;
-//            }
-//
-//            connection.commit();
-//            isSuccess = true;
-//
-//        } catch (SQLException e) {
-//            connection.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            connection.setAutoCommit(true);
-//        }
-//
-//        return isSuccess;
-//    }
-
-//    public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
-//        final FlowerDao flowerDao = new FlowerDaoImpl();
-//        Connection connection = DBConnection.getInstance().getConnection();
-//        boolean isSuccess = false;
-//
-//        try {
-//            connection.setAutoCommit(false); // Start transaction
-//
-//            for (OrderDetailsDto dto : orderDetailsList) {
-//
-//                // Call DAO save method instead of writing the query here
-//                OrderDetails orderDetails = new OrderDetails(
-//                        dto.getOrderId(),
-//                        dto.getCustomerName(),
-//                        dto.getItemName(),
-//                        dto.getItemId(),
-//                        dto.getPaymentType(),
-//                        dto.getItemQty(),
-//                        dto.getTotalAmount(),
-//                        dto.getHandleBy(),
-//                        dto.getTotalBill()
-//                );
-//
-//                if (!save(orderDetails)) { // DAO method
-//                    connection.rollback();
-//                    return false;
-//                }
-//
-//                // 2. Reduce item quantity
-//                String itemId = dto.getItemId();
-//                int qtyToReduce = Integer.parseInt(dto.getItemQty());
-//
-//                if (itemId.startsWith("P")) {
-//                    if (!plantDao.reduceQty(itemId, qtyToReduce, connection)) {
-//                        connection.rollback();
-//                        return false;
-//                    }
-//                } else if (itemId.startsWith("F")) {
-//                    if (!flowerDao.reduceQty(itemId, qtyToReduce, connection)) {
-//                        connection.rollback();
-//                        return false;
-//                    }
-//                }
-//            }
-//
-//            // Insert order summary
-//            if (!insertOrderSummary()) {
-//                connection.rollback();
-//                return false;
-//            }
-//
-//            connection.commit();
-//            isSuccess = true;
-//
-//        } catch (SQLException e) {
-//            connection.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            connection.setAutoCommit(true);
-//        }
-//
-//        return isSuccess;
-//    }
 
 
     public static boolean insertOrderSummary() throws SQLException {
@@ -277,7 +136,7 @@ public class OrderDaoImpl implements OrderDao {
         return todaySale;
     }
 
-    public static double getYesterdayTotalSale() throws SQLException {
+    public static double getYesterdayTotalSaleForDashBoard() throws SQLException {
         String sql = "SELECT SUM(CAST(total_bill AS DECIMAL(10,2))) AS yesterday_sales FROM order_item_details WHERE DATE(order_date) = CURDATE() - INTERVAL 1 DAY";
 
 
@@ -320,11 +179,6 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public OrderDetails search(String number) throws SQLException {
         return null;
-    }
-
-    @Override
-    public String getNextId() throws SQLException {
-        return "";
     }
 
     @Override

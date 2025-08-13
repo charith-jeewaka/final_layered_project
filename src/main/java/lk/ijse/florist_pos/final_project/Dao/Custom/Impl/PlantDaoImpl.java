@@ -90,14 +90,6 @@ public class PlantDaoImpl implements PlantDao {
         );
     }
 
-//    public boolean reducePlantQty(Connection con, String plantId, int qty) throws SQLException {
-//        String sql = "UPDATE plant SET plant_available_qty = plant_available_qty - ? WHERE plant_id = ?";
-//        PreparedStatement ps = con.prepareStatement(sql);
-//        ps.setInt(1, qty);
-//        ps.setString(2, plantId);
-//        return ps.executeUpdate() > 0;
-//    }
-
 
     @Override
     public boolean reduceQty(String plantId, int qtyToReduce, Connection connection) throws SQLException {

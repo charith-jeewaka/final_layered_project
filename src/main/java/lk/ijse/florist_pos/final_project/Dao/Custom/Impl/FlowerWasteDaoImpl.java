@@ -2,7 +2,6 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerWasteDao;
 import lk.ijse.florist_pos.final_project.Entity.FlowerWaste;
-import lk.ijse.florist_pos.final_project.dto.FlowerWasteDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 
 import java.sql.ResultSet;

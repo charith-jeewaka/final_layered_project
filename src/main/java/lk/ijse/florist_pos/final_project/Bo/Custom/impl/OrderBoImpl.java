@@ -1,8 +1,10 @@
 package lk.ijse.florist_pos.final_project.Bo.Custom.impl;
 
-import lk.ijse.florist_pos.final_project.Bo.Custom.PlaceOrderBO;
+import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
+import lk.ijse.florist_pos.final_project.Dao.Custom.CustomerDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.CustomerDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
@@ -15,12 +17,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PlaceOrderBoImpl implements PlaceOrderBO {
+public class OrderBoImpl implements OrderBO {
 
     OrderDao orderDao = new  OrderDaoImpl();
     PlantDao plantDao = new PlantDaoImpl();
     FlowerDao flowerDao = new FlowerDaoImpl();
-
 
     @Override
     public boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException {
