@@ -2,9 +2,7 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.Entity.Plant;
-import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -73,7 +71,7 @@ public class PlantDaoImpl implements PlantDao {
                 plant.getPlantVarient(),
                 plant.getPlantAvailableQty(),
                 plant.getPlantRegisteredTime(),
-                plant.getPlantId() // This is the WHERE condition ID
+                plant.getPlantId()
         );
     }
 

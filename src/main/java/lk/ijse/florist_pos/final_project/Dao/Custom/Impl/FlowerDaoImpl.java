@@ -3,9 +3,6 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.Entity.Flower;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

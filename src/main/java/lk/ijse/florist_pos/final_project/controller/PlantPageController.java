@@ -11,11 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.florist_pos.final_project.Entity.Plant;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.PlantBO;
 import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.PlantTM;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class PlantPageController implements Initializable {
     public JFXButton btnPlantPageReset;
     public JFXButton btnPlantSave;
 
-    private final PlantDaoImpl plantModel = new PlantDaoImpl();
+    PlantBO plantBO = (PlantBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT);
 
     private final String namePattern = "^[A-Za-z ]+$";
     private final String heightPattern = "^(0\\.5|[1-4](\\.5)?|5)$";
@@ -126,19 +125,19 @@ public class PlantPageController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<Plant> plants = plantModel.getAll();
+        ArrayList<PlantDto> plantDtos = plantBO.getAllPlants();
         ObservableList<PlantTM> plantTMS = FXCollections.observableArrayList();
 
-        for (Plant plant : plants) {
+        for (PlantDto plantDto : plantDtos) {
 
             PlantTM plantTM = new PlantTM(
-                    plant.getPlantId(),
-                    plant.getPlantName(),
-                    plant.getPlantHeight(),
-                    plant.getPlantPrice(),
-                    plant.getPlantVarient(),
-                    plant.getPlantAvailableQty(),
-                    plant.getPlantRegisteredTime()
+                    plantDto.getPlantId(),
+                    plantDto.getPlantName(),
+                    plantDto.getPlantHeight(),
+                    plantDto.getPlantPrice(),
+                    plantDto.getPlantVarient(),
+                    plantDto.getPlantAvailableQty(),
+                    plantDto.getPlantRegisteredTime()
             );
             plantTMS.add(plantTM);
         }
@@ -151,6 +150,8 @@ public class PlantPageController implements Initializable {
             loadTableData();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         txtname.clear();
         txtVarient.clear();
@@ -166,8 +167,8 @@ public class PlantPageController implements Initializable {
         btnPlantUpdate.setDisable(true);
     }
 
-    private void loadNextId() throws SQLException {
-        String nextId = plantModel.getNextId();
+    private void loadNextId() throws SQLException, ClassNotFoundException {
+        String nextId = plantBO.getNextPlantId();
         lblPlantId.setText(nextId);
     }
 
@@ -188,7 +189,7 @@ public class PlantPageController implements Initializable {
             // save button disable
             btnPlantSave.setDisable(true);
 
-            // update, delete button enable
+            // update delete button enable
             btnPlantUpdate.setDisable(false);
             btnPlantDelete.setDisable(false);
         }
@@ -197,7 +198,7 @@ public class PlantPageController implements Initializable {
     public void plantSearchOnAction(ActionEvent actionEvent) {
     }
 
-    public void plantUpdateOnAction(ActionEvent actionEvent) throws SQLException {
+    public void plantUpdateOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         String id = lblPlantId.getText();
         String name = txtname.getText();
         String varient = txtVarient.getText();
@@ -213,7 +214,7 @@ public class PlantPageController implements Initializable {
         }
         String time = selectedItem.getPlantRegisteredTime(); // Use existing time
 
-        Plant plant = new Plant(id, name, height, price, varient, qty, time);
+        PlantDto plantDto = new PlantDto(id, name, height, price, varient, qty, time);
 
         boolean isValidName = name.matches(namePattern);
         boolean isValidHight = height.matches(heightPattern);
@@ -222,7 +223,7 @@ public class PlantPageController implements Initializable {
         boolean isValidQty = qty.matches(qtyPattern);
 
         if (isValidHight && isValidPrice && isValidVarient && isValidQty && isValidName) {
-            boolean isSaved = plantModel.update(plant);
+            boolean isSaved = plantBO.updatePlant(plantDto);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Plant updated successfully.").show();
@@ -249,7 +250,7 @@ public class PlantPageController implements Initializable {
 
             String plantId = lblPlantId.getText();
             try {
-                boolean isDeleted = plantModel.delete(plantId);
+                boolean isDeleted = plantBO.deletePlant(plantId);
 
                 if (isDeleted) {
                     resetPage();
@@ -279,10 +280,10 @@ public class PlantPageController implements Initializable {
         String name = txtname.getText();
         String height = String.valueOf(cmbHeight.getValue());
         String price = txtPrice.getText();
-        String varient = txtVarient.getText(); // Varient is possibly wrong, check your input fields
+        String varient = txtVarient.getText();
         String qty = txtQty.getText();
 
-        // Validate inputs with regex
+        // Validate regex
         boolean isValidName = name.matches(namePattern);
         boolean isValidHeight = height.matches(heightPattern);
         boolean isValidPrice = price.matches(pricePattern);
@@ -292,7 +293,7 @@ public class PlantPageController implements Initializable {
         // Validate all fields
         if (isValidName && isValidHeight && isValidPrice && isValidVarient && isValidQty) {
 
-            Plant plant = new Plant(Id,
+            PlantDto plantDto = new PlantDto(Id,
                     name,
                     height,
                     price,
@@ -302,7 +303,7 @@ public class PlantPageController implements Initializable {
 
             try {
 
-                boolean isSaved = plantModel.save(plant);
+                boolean isSaved = plantBO.savePlant(plantDto);
 
                 if (isSaved) {
                     new Alert(Alert.AlertType.INFORMATION, "Plant saved successfully.").show();
@@ -314,6 +315,8 @@ public class PlantPageController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error Saving Plant").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         } else {
 

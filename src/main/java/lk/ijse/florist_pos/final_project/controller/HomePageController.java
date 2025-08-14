@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.Bo.BOFactory;
 import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
 import lk.ijse.florist_pos.final_project.Bo.Custom.FlowerBO;
+import lk.ijse.florist_pos.final_project.Bo.Custom.PlantBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
@@ -37,7 +38,8 @@ public class HomePageController implements Initializable {
 FlowerBO flowerBO =
         (FlowerBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.FLOWER);
 
-    PlantDao plantDao = new PlantDaoImpl();
+PlantBO plantBO = (PlantBO)BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT);
+
     StaffDao staffDao = new StaffDaoImpll();
 
 
@@ -50,7 +52,7 @@ FlowerBO flowerBO =
             lblYesterdaySale.setText(String.valueOf(yesterdaySale));
             double todaySale = OrderDaoImpl.getTodayTotalSaleForDashBoard();
             lblTodaySale.setText(String.valueOf(todaySale));
-            int totalPlants = plantDao.getTotalPlantQty();
+            int totalPlants = plantBO.getTotalPlantQty();
             lblTotalPlants.setText(String.valueOf(totalPlants));
             int totalEmployee = staffDao.getTotalEmployees();
             lblEmployees.setText(String.valueOf(totalEmployee));
