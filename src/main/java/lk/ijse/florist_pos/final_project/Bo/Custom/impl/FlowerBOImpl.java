@@ -30,7 +30,7 @@ public class FlowerBOImpl implements FlowerBO {
 
 
     @Override
-    public boolean saveFlower(FlowerDto flowerDto) throws SQLException, ClassNotFoundException {
+    public boolean saveFlower(FlowerDto flowerDto) throws SQLException{
         return flowerDao.save(
                 new Flower(
                         flowerDto.getFlowerId(),
@@ -43,7 +43,7 @@ public class FlowerBOImpl implements FlowerBO {
     }
 
     @Override
-    public boolean updateFlower(FlowerDto flowerDto) throws SQLException, ClassNotFoundException {
+    public boolean updateFlower(FlowerDto flowerDto) throws SQLException {
         return flowerDao.update(new Flower(
                 flowerDto.getFlowerId(),
                 flowerDto.getFlowerName(),
@@ -55,12 +55,12 @@ public class FlowerBOImpl implements FlowerBO {
     }
 
     @Override
-    public boolean deleteFlower(String id) throws SQLException, ClassNotFoundException {
+    public boolean deleteFlower(String id) throws SQLException {
         return flowerDao.delete(id);
     }
 
     @Override
-    public String getNextFlowerId() throws SQLException, ClassNotFoundException {
+    public String getNextFlowerId() throws SQLException {
         return flowerDao.getNextId();
     }
 

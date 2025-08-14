@@ -28,7 +28,7 @@ public class CustomerBoImpl implements CustomerBo{
 
 
     @Override
-    public boolean saveCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+    public boolean saveCustomer(CustomerDto customerDto) throws SQLException {
         return customerDao.save(
                 new Customer(
                         customerDto.getCustomerId(),
@@ -40,7 +40,7 @@ public class CustomerBoImpl implements CustomerBo{
     }
 
     @Override
-    public boolean updateCustomer(CustomerDto customerDTO) throws SQLException, ClassNotFoundException {
+    public boolean updateCustomer(CustomerDto customerDTO) throws SQLException {
         return customerDao.update(new Customer(
                 customerDTO.getCustomerId(),
                 customerDTO.getCustomerName(),
@@ -51,12 +51,12 @@ public class CustomerBoImpl implements CustomerBo{
     }
 
     @Override
-    public boolean deleteCustomer(String id) throws SQLException, ClassNotFoundException {
+    public boolean deleteCustomer(String id) throws SQLException {
         return customerDao.delete(id);
     }
 
     @Override
-    public String getNextCustomerId() throws SQLException, ClassNotFoundException {
+    public String getNextCustomerId() throws SQLException {
         return customerDao.getNextId();
     }
 
@@ -65,7 +65,6 @@ public class CustomerBoImpl implements CustomerBo{
         Customer customer = customerDao.search(phoneNumber);
 
         if (customer != null) {
-            // Convert Entity → DTO
             return new CustomerDto(
                     customer.getCustomerId(),
                     customer.getCustomerName(),

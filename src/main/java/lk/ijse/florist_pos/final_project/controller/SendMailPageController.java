@@ -19,11 +19,15 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.SentEmailBO;
+import lk.ijse.florist_pos.final_project.Bo.Custom.SupplierBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SupplierDao;
 import lk.ijse.florist_pos.final_project.Entity.SentEmail;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SupplierDaoImpl;
+import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.util.MailConfigLoader;
 
 import java.io.IOException;
@@ -46,6 +50,7 @@ public class SendMailPageController {
     public AnchorPane ancMailSend;
     @FXML
     public JFXButton btnHistory;
+    @FXML
     public ImageView imageview;
     @FXML
     private JFXButton btnSend;
@@ -58,8 +63,11 @@ public class SendMailPageController {
     @FXML
     private ProgressIndicator stkLoadingEffect;
 
-    final SupplierDao supplierDao = new SupplierDaoImpl();
-    SentEmailDao sentEmailDao = new SentEmailDaoImpl();
+    SupplierBO supplierBO = (SupplierBO)
+        BOFactory.getInstance().getBo(BOFactory.BoTypes.SUPPLIER);
+
+    SentEmailBO sentEmailBO = (SentEmailBO)
+            BOFactory.getInstance().getBo(BOFactory.BoTypes.SENT_EMAIL);
 
     public ObservableList<String> sampleSubjects = FXCollections.observableArrayList(
             "Request Supply","Thank You for Timely Delivery","Notice of Price Adjustment","Request for Quotation"
@@ -80,7 +88,7 @@ public class SendMailPageController {
         });
 
         try {
-            List<String> emails = supplierDao.getAllSupplierEmails();
+            List<String> emails = supplierBO.getAllSupplierEmails();
             cmbSupplierEmail.setItems(FXCollections.observableArrayList(emails));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +157,7 @@ public class SendMailPageController {
                     alert.setTitle("Email Sent");
                     alert.setHeaderText(null);
                     alert.setContentText("The email has been sent successfully.");
-                    SentEmail sentEmail = new SentEmail(
+                    SentEmailDto sentEmailDto = new SentEmailDto(
                             txtTo.getText(),
                             txtSubject.getText(),
                             txaBody.getText(),
@@ -157,8 +165,10 @@ public class SendMailPageController {
 
                     );
                     try {
-                        sentEmailDao.save(sentEmail);
+                        sentEmailBO.saveSentEmails(sentEmailDto);
                     } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
                     alert.showAndWait();

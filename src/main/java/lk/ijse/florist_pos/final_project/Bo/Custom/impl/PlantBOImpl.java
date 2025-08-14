@@ -28,7 +28,7 @@ public class PlantBOImpl implements PlantBO {
     }
 
     @Override
-    public boolean savePlant(PlantDto plantDto) throws SQLException, ClassNotFoundException {
+    public boolean savePlant(PlantDto plantDto) throws SQLException {
         return plantDao.save(
                 new Plant(
                         plantDto.getPlantId(),
@@ -43,7 +43,7 @@ public class PlantBOImpl implements PlantBO {
     }
 
     @Override
-    public boolean updatePlant(PlantDto plantDto) throws SQLException, ClassNotFoundException {
+    public boolean updatePlant(PlantDto plantDto) throws SQLException {
         return plantDao.update(new Plant(
                 plantDto.getPlantId(),
                 plantDto.getPlantName(),
@@ -52,18 +52,17 @@ public class PlantBOImpl implements PlantBO {
                 plantDto.getPlantVarient(),
                 plantDto.getPlantAvailableQty(),
                 plantDto.getPlantRegisteredTime()
-
                 )
         );
     }
 
     @Override
-    public boolean deletePlant(String id) throws SQLException, ClassNotFoundException {
+    public boolean deletePlant(String id) throws SQLException {
         return plantDao.delete(id);
     }
 
     @Override
-    public String getNextPlantId() throws SQLException, ClassNotFoundException {
+    public String getNextPlantId() throws SQLException {
         return plantDao.getNextId();
     }
 

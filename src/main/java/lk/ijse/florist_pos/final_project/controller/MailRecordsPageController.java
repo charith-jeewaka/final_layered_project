@@ -12,12 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
-import lk.ijse.florist_pos.final_project.Entity.SentEmail;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.SentEmailBO;
 import lk.ijse.florist_pos.final_project.dto.SentEmailDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.SentEmailsTM;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SentEmailDaoImpl;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,7 +33,9 @@ public class MailRecordsPageController implements Initializable {
     public AnchorPane ancMailLog;
     public ImageView imageView;
 
-    SentEmailDao sentEmailDao = new SentEmailDaoImpl();
+
+    SentEmailBO sentEmailBO = (SentEmailBO)
+            BOFactory.getInstance().getBo(BOFactory.BoTypes.SENT_EMAIL);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,28 +58,30 @@ public class MailRecordsPageController implements Initializable {
         ObservableList<SentEmailsTM> tmList = FXCollections.observableArrayList();
 
         try {
-            List<SentEmail> sentEmails = sentEmailDao.getAll();
-            for (SentEmail sentEmail : sentEmails) {
+            List<SentEmailDto> sentEmailDtos = sentEmailBO.getAllSentEmails();
+            for (SentEmailDto sentEmailDto : sentEmailDtos) {
                 JFXButton viewBtn = new JFXButton("View");
                 viewBtn.setStyle("-fx-background-color: #2ed573; -fx-text-fill: #ffffff;");
-                viewBtn.setOnAction(e -> showEmailPopup(sentEmail.getBody()));
+                viewBtn.setOnAction(e -> showEmailPopup(sentEmailDto.getBody()));
 
                 JFXButton deleteBtn = new JFXButton("Delete");
                 deleteBtn.setStyle("-fx-background-color: #ff6b81; -fx-text-fill: white;");
                 deleteBtn.setOnAction(e -> {
                     try {
-                        boolean isDeleted = sentEmailDao.delete(sentEmail.getTimeStamp());
+                        boolean isDeleted = sentEmailBO.deleteSentEmails(sentEmailDto.getTimeStamp());
                         if (isDeleted) loadAllEmails();
                     } catch (SQLException ex) {
                         ex.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
                 });
 
                 SentEmailsTM tm = new SentEmailsTM(
-                        sentEmail.getRecipientEmail(),
-                        sentEmail.getSubject(),
-                        sentEmail.getBody(),
-                        sentEmail.getTimeStamp(),
+                        sentEmailDto.getRecipientEmail(),
+                        sentEmailDto.getSubject(),
+                        sentEmailDto.getBody(),
+                        sentEmailDto.getTimeStamp(),
                         viewBtn,
                         deleteBtn
                 );

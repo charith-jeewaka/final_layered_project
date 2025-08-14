@@ -3,7 +3,6 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SentEmailDao;
 import lk.ijse.florist_pos.final_project.Entity.SentEmail;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

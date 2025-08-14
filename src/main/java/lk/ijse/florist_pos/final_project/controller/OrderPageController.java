@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
 import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
 import lk.ijse.florist_pos.final_project.Bo.Custom.impl.OrderBoImpl;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
@@ -63,8 +64,8 @@ public class OrderPageController implements Initializable {
     public ImageView imageView;
     public AnchorPane ancOrder;
 
-    OrderBO placeOrderBO = new OrderBoImpl();
-
+    OrderBO orderBO = (OrderBO)
+            BOFactory.getInstance().getBo(BOFactory.BoTypes.ORDER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -251,7 +252,7 @@ public class OrderPageController implements Initializable {
             lblBalence.setText("");
         }
 
-        boolean isPlaced = placeOrderBO.placeOrder(orderDetailsList);
+        boolean isPlaced = orderBO.placeOrder(orderDetailsList);
 
         if (isPlaced) {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Need a Bill ?", ButtonType.YES, ButtonType.NO);
