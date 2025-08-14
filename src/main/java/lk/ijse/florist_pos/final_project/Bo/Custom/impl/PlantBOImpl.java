@@ -4,6 +4,7 @@ import lk.ijse.florist_pos.final_project.Bo.Custom.PlantBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.Dao.DaoFactory;
 import lk.ijse.florist_pos.final_project.Entity.Plant;
+import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,6 +70,11 @@ public class PlantBOImpl implements PlantBO {
     @Override
     public int getTotalPlantQty() throws SQLException {
          return plantDao.getTotalPlantQty();
+    }
+
+    @Override
+    public OrderItemDto getItemDetails(String code) throws SQLException {
+        return plantDao.getItemDetails(code);
     }
 
 }

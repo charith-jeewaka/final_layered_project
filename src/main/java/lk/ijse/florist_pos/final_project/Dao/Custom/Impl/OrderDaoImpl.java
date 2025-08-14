@@ -25,28 +25,6 @@ public class OrderDaoImpl implements OrderDao {
         return tableCharacter + "001";
     }
 
-
-
-    public OrderItemDto getItemDetails(String code) throws SQLException {
-        ResultSet rs;
-        if (code.startsWith("P")) {
-            rs = CrudUtil.execute("SELECT plant_name AS item_name, plant_available_qty AS qty, plant_price AS price FROM plant WHERE plant_id = ?", code);
-        } else if (code.startsWith("F")) {
-            rs = CrudUtil.execute("SELECT flower_name AS item_name, flower_available_qty AS qty, flower_price AS price FROM flower WHERE flower_id = ?", code);
-        } else {
-            throw new IllegalArgumentException("Invalid code format: " + code);
-        }
-
-        if (rs.next()) {
-            String name = rs.getString("item_name");
-            int qty = rs.getInt("qty");
-            double unitPrice = rs.getDouble("price");
-            return new OrderItemDto(name, unitPrice, qty);
-        }
-        return null;
-    }
-
-
     public static boolean insertOrderSummary() throws SQLException {
         String sql = """
             INSERT INTO order_item_details (order_id, customer_name, total_bill, handled_by, order_date)
@@ -102,7 +80,8 @@ public class OrderDaoImpl implements OrderDao {
         return BigDecimal.ZERO;
     }
 
-    public static double getTodayTotalSaleForDashBoard() throws SQLException {
+    @Override
+    public double getTodayTotalSaleForDashBoard() throws SQLException {
         String sql = "SELECT SUM(CAST(total_bill AS DECIMAL(10,2))) AS today_sales FROM order_item_details WHERE DATE(order_date) = CURDATE()";
 
         ResultSet rs = CrudUtil.execute(sql);
@@ -113,7 +92,8 @@ public class OrderDaoImpl implements OrderDao {
         return todaySale;
     }
 
-    public static double getYesterdayTotalSaleForDashBoard() throws SQLException {
+    @Override
+    public  double getYesterdayTotalSaleForDashBoard() throws SQLException {
         String sql = "SELECT SUM(CAST(total_bill AS DECIMAL(10,2))) AS yesterday_sales FROM order_item_details WHERE DATE(order_date) = CURDATE() - INTERVAL 1 DAY";
 
         ResultSet rs = CrudUtil.execute(sql);

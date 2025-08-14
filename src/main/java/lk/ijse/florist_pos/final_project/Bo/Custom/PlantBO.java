@@ -1,6 +1,7 @@
 package lk.ijse.florist_pos.final_project.Bo.Custom;
 
 import lk.ijse.florist_pos.final_project.Bo.SuperBO;
+import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.dto.PlantDto;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,5 +19,8 @@ public interface PlantBO extends SuperBO {
     String getNextPlantId() throws SQLException, ClassNotFoundException ;
 
     int getTotalPlantQty() throws SQLException ;
+
+    public OrderItemDto getItemDetails(String code) throws SQLException ;
+
 
 }

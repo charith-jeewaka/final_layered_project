@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.Bo.BOFactory;
 import lk.ijse.florist_pos.final_project.Bo.Custom.FlowerBO;
+import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
 import lk.ijse.florist_pos.final_project.Bo.Custom.PlantBO;
 import lk.ijse.florist_pos.final_project.Bo.Custom.StaffBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
@@ -37,14 +38,16 @@ public class HomePageController implements Initializable {
     StaffBO staffBO =
             (StaffBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.STAFF);
 
+    OrderBO orderBO = (OrderBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.ORDER);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         imageView.fitWidthProperty().bind(ancHome.widthProperty());
         imageView.fitHeightProperty().bind(ancHome.heightProperty());
         try {
-            double yesterdaySale = OrderDaoImpl.getYesterdayTotalSaleForDashBoard();
+            double yesterdaySale = orderBO.getYesterdayTotalSaleForDashBoard();
             lblYesterdaySale.setText(String.valueOf(yesterdaySale));
-            double todaySale = OrderDaoImpl.getTodayTotalSaleForDashBoard();
+            double todaySale = orderBO.getTodayTotalSaleForDashBoard();
             lblTodaySale.setText(String.valueOf(todaySale));
             int totalPlants = plantBO.getTotalPlantQty();
             lblTotalPlants.setText(String.valueOf(totalPlants));

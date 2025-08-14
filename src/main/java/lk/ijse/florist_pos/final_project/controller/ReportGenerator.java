@@ -14,25 +14,25 @@ public class ReportGenerator {
 
     public void generateTodaySalesReport() {
         try {
-            // 1. Get today's total income from model
+            //  Get todays total income from model
             BigDecimal todayIncome = OrderDaoImpl.getTodayTotalSales();
             String todayIncomeString = todayIncome.toString();
             System.out.println(todayIncomeString);
 
-            // 2. Load compiled Jasper file (.jasper)
+            //  Load compiled Jasper file
             JasperReport jasperReport = (JasperReport) JRLoader.loadObject(
                     getClass().getResource("/Reports/tsales.jasper")
             );
 
-            // 3. Prepare parameters
+            //  Prepare parameters
             HashMap<String, Object> params = new HashMap<>();
             params.put("TotalIncome", todayIncome); // Make sure your JRXML has a parameter with this exact name
 
-            // 4. Fill the report
+            // Fill the report
             Connection connection = DBConnection.getInstance().getConnection();
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
 
-            // 5. Show report
+            //  Sshow report
             JasperViewer.viewReport(jasperPrint, false);
 
         } catch (SQLException | JRException e) {

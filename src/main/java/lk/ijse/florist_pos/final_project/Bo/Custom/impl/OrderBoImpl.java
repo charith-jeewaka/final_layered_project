@@ -81,4 +81,14 @@ public class OrderBoImpl implements OrderBO {
         }
         return isSuccess;
     }
+
+    @Override
+    public double getYesterdayTotalSaleForDashBoard() throws SQLException {
+        return orderDao.getYesterdayTotalSaleForDashBoard();
+    }
+
+    @Override
+    public double getTodayTotalSaleForDashBoard() throws SQLException {
+        return orderDao.getTodayTotalSaleForDashBoard();
+    }
 }

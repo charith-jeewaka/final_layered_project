@@ -9,4 +9,10 @@ public interface OrderBO extends SuperBO {
 
     boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException ;
 
+    double getYesterdayTotalSaleForDashBoard() throws SQLException ;
+
+    double getTodayTotalSaleForDashBoard() throws SQLException ;
+
+
+
 }

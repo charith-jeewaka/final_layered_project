@@ -57,7 +57,7 @@
                   </HBox>
                   <HBox layoutX="633.0" layoutY="14.0" prefHeight="95.0" prefWidth="95.0" style="-fx-border-radius: 20;" AnchorPane.rightAnchor="10.0">
                      <children>
-                        <JFXButton fx:id="btnPlantUpdate" buttonType="RAISED" onAction="#plantUpdateOnAction" prefHeight="95.0" prefWidth="97.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-background-radius: 20; -fx-cursor: hand;" text=".">
+                        <JFXButton fx:id="btnPlantUpdate" buttonType="RAISED" onAction="#plantUpdateOnAction" prefHeight="95.0" prefWidth="97.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-background-radius: 20; -fx-cursor: hand;" text=".">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -77,7 +77,7 @@
                   </HBox>
                   <HBox layoutX="618.0" layoutY="125.0" prefHeight="95.0" prefWidth="95.0" AnchorPane.rightAnchor="10.0">
                      <children>
-                        <JFXButton fx:id="btnPlantDelete" buttonType="RAISED" onAction="#plantDeleteOnAction" prefHeight="95.0" prefWidth="95.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-background-radius: 20; -fx-cursor: hand;" text=".">
+                        <JFXButton fx:id="btnPlantDelete" buttonType="RAISED" onAction="#plantDeleteOnAction" prefHeight="95.0" prefWidth="95.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-background-radius: 20; -fx-cursor: hand;" text=".">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -97,7 +97,7 @@
                   </HBox>
                   <HBox layoutX="531.0" layoutY="125.0" prefHeight="95.0" prefWidth="95.0" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="115.0">
                      <children>
-                        <JFXButton fx:id="btnPlantPageReset" buttonType="RAISED" onAction="#plantPageResetOnAction" prefHeight="95.0" prefWidth="95.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-background-radius: 20; -fx-cursor: hand;" text=".">
+                        <JFXButton fx:id="btnPlantPageReset" buttonType="RAISED" onAction="#plantPageResetOnAction" prefHeight="95.0" prefWidth="95.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-background-radius: 20; -fx-cursor: hand;" text=".">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -117,7 +117,7 @@
                   </HBox>
                   <HBox layoutX="530.0" layoutY="14.0" prefHeight="95.0" prefWidth="95.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="14.0">
                      <children>
-                        <JFXButton fx:id="btnPlantSave" buttonType="RAISED" onAction="#plantSaveOnAction" prefHeight="95.0" prefWidth="95.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-border-radius: 20; -fx-background-radius: 20; -fx-cursor: hand;" text=".">
+                        <JFXButton fx:id="btnPlantSave" buttonType="RAISED" onAction="#plantSaveOnAction" prefHeight="95.0" prefWidth="95.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-border-radius: 20; -fx-background-radius: 20; -fx-cursor: hand;" text=".">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -186,7 +186,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnPlantSearch" buttonType="RAISED" onAction="#plantSearchOnAction" prefHeight="39.0" prefWidth="54.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-cursor: hand;" text=".">
+                  <JFXButton fx:id="btnPlantSearch" buttonType="RAISED" onAction="#plantSearchOnAction" prefHeight="39.0" prefWidth="54.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-cursor: hand;" text=".">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

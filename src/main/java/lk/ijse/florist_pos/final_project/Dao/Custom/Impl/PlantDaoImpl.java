@@ -2,6 +2,7 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 
 import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.Entity.Plant;
+import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -108,5 +109,25 @@ public class PlantDaoImpl implements PlantDao {
             plantCount = rs.getInt("plant_count");
         }
         return plantCount;
+    }
+
+    @Override
+    public OrderItemDto getItemDetails(String code) throws SQLException {
+        ResultSet rs;
+        if (code.startsWith("P")) {
+            rs = CrudUtil.execute("SELECT plant_name AS item_name, plant_available_qty AS qty, plant_price AS price FROM plant WHERE plant_id = ?", code);
+        } else if (code.startsWith("F")) {
+            rs = CrudUtil.execute("SELECT flower_name AS item_name, flower_available_qty AS qty, flower_price AS price FROM flower WHERE flower_id = ?", code);
+        } else {
+            throw new IllegalArgumentException("Invalid code format: " + code);
+        }
+
+        if (rs.next()) {
+            String name = rs.getString("item_name");
+            int qty = rs.getInt("qty");
+            double unitPrice = rs.getDouble("price");
+            return new OrderItemDto(name, unitPrice, qty);
+        }
+        return null;
     }
 }
