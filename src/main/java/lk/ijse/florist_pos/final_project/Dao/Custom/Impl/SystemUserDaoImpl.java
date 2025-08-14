@@ -25,36 +25,30 @@ public class SystemUserDaoImpl implements SystemUserDao {
     public void validateLogin(TextField username, PasswordField password, Label label) {
         LoginScreenController loginScreenController = new LoginScreenController();
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-
             String sql = "SELECT * FROM system_user WHERE user_name = ? AND password = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, username.getText());
-            statement.setString(2, password.getText());
+            ResultSet rs = CrudUtil.execute(sql, username.getText(), password.getText());
 
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-
+            if (rs.next()) {
                 label.setText("Login successful!");
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Dashboard.fxml"));
                 Parent root = loader.load();
+
                 DashboardController dashboardController = loader.getController();
-                dashboardController.lblCurrentUser.setText(resultSet.getString("user_name"));
-                dashboardController.lblDashBoardName.setText(resultSet.getString("user_name"));
+                String user = rs.getString("user_name");
+                dashboardController.lblCurrentUser.setText(user);
+                dashboardController.lblDashBoardName.setText(user);
+
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
                 stage.show();
 
                 ((Stage) username.getScene().getWindow()).close();
-
             } else {
                 label.setText("Invalid username or password");
                 username.clear();
                 password.clear();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             label.setText("Database error!");
@@ -64,21 +58,11 @@ public class SystemUserDaoImpl implements SystemUserDao {
     }
 
 
-    @Override
+
     public boolean validateUserForPasswordReset(String id, String userName, String role, String mobile, String email, String nic) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-
             String sql = "SELECT * FROM system_user WHERE user_id = ? AND user_name = ? AND user_role = ? AND user_mobile = ? AND user_email = ? AND user_nic = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, id);
-            statement.setString(2, userName);
-            statement.setString(3, role);
-            statement.setString(4, mobile);
-            statement.setString(5, email);
-            statement.setString(6, nic);
-
-            ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = CrudUtil.execute(sql, id, userName, role, mobile, email, nic);
             return resultSet.next();
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,18 +73,14 @@ public class SystemUserDaoImpl implements SystemUserDao {
     @Override
     public boolean updateUserPassword(String userId, String newPassword) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            String sql = "UPDATE system_user SET password = ? WHERE user_id = ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, newPassword);
-            statement.setString(2, userId);
-
-            return statement.executeUpdate() > 0;
+            String sql = "UPDATE system_user SET password = ? WHERE user_id = ?";
+            return CrudUtil.execute(sql, newPassword, userId);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
 
     @Override
     public boolean save(SystemUser systemUser) throws SQLException {
