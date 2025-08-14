@@ -125,7 +125,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnSave" layoutX="513.0" layoutY="454.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveUserOnAction" prefHeight="42.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-background-radius: 20; -fx-border-radius: 20; -fx-cursor: hand;" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0">
+      <Button fx:id="btnSave" layoutX="513.0" layoutY="454.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveUserOnAction" prefHeight="42.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-background-radius: 20; -fx-border-radius: 20; -fx-cursor: hand;" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -150,21 +150,37 @@
             </Label>
          </children>
       </HBox>
-      <TextField fx:id="txtVerificationCode" layoutX="306.0" layoutY="455.0" prefHeight="37.0" prefWidth="149.0" promptText="Verification" style="-fx-background-color: null; -fx-border-color: black;" AnchorPane.leftAnchor="306.0" AnchorPane.rightAnchor="318.0" AnchorPane.topAnchor="455.0">
+      <TextField fx:id="txtVerificationCode" layoutX="312.0" layoutY="148.0" prefHeight="37.0" prefWidth="149.0" promptText="Enter Verification Code Here" style="-fx-background-color: null; -fx-border-color: black;" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="312.0" AnchorPane.topAnchor="148.0">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <Button fx:id="btnSendCode" layoutX="10.0" layoutY="454.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnSendCodeOnAction" prefHeight="42.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(from 100.0% 43.6019% to 100.0% 58.7678%, #1d700ae9 0.0%, #000000 100.0%); -fx-background-radius: 20; -fx-border-radius: 20; -fx-cursor: hand;" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0">
+      <Button fx:id="btnSendCode" layoutX="10.0" layoutY="454.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnSendCodeOnAction" prefHeight="42.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-background-radius: 20; -fx-border-radius: 20; -fx-cursor: hand;" text="Get Code" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
          <graphic>
             <JFXBadge prefHeight="32.0" prefWidth="32.0">
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/savew.png" />
+                        <Image url="@../images/mailw.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </JFXBadge>
+         </graphic>
+      </Button>
+      <Button fx:id="btnVerifyCode" layoutX="262.0" layoutY="454.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#verifyCode" prefHeight="42.0" prefWidth="250.0" style="-fx-background-color: linear-gradient(to right, #004d40 0%, #00332c 50%, #004d40 100%); -fx-background-radius: 20; -fx-border-radius: 20; -fx-cursor: hand;" text="Verify Code" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="450.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <graphic>
+            <JFXBadge prefHeight="32.0" prefWidth="32.0">
+               <children>
+                  <ImageView fitHeight="22.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/mailw.png" />
                      </image>
                   </ImageView>
                </children>

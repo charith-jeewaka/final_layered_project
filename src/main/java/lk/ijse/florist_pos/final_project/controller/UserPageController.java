@@ -45,7 +45,8 @@ public class UserPageController implements Initializable {
     public TextField txtVerificationCode;
     public Button btnSendCode;
 
-    SystemUserBO systemUserBO = (SystemUserBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.SYSTEM_USER);
+    SystemUserBO systemUserBO = (SystemUserBO)
+            BOFactory.getInstance().getBo(BOFactory.BoTypes.SYSTEM_USER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -109,5 +110,8 @@ public class UserPageController implements Initializable {
     }
 
     public void btnSendCodeOnAction(ActionEvent actionEvent) {
+    }
+
+    public void verifyCode(ActionEvent actionEvent) {
     }
 }
