@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.SystemUserBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class SavePasswordPageController {
     @FXML
@@ -26,7 +29,7 @@ public class SavePasswordPageController {
     @FXML
     public Label lblSavePasswordMassage;
 
-    SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
+    SystemUserBO systemUserBO = (SystemUserBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.SYSTEM_USER);
 
     public void backOnAction(ActionEvent actionEvent) {
         navigateTo("/View/ForgetPassword.fxml");
@@ -49,13 +52,13 @@ public class SavePasswordPageController {
         }
     }
 
-    public void saveNewPasswordOnAction(ActionEvent actionEvent) throws IOException {
+    public void saveNewPasswordOnAction(ActionEvent actionEvent) throws IOException, SQLException {
         String newPassword = txtNewPassword.getText();
         String confirmPassword = txtConfirmNewPassword.getText();
 
         if (newPassword.equals(confirmPassword)) {
             if (newPassword.length() >= 3) {
-                if (systemUserModel.updateUserPassword(txtResetUserId.getText(), newPassword)) {
+                if (systemUserBO.updateUserPassword(txtResetUserId.getText(), newPassword)) {
                     lblSavePasswordMassage.setText("Password updated successfully!");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.SystemUserBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ForgetPasswordPageController {
     @FXML
@@ -32,10 +35,9 @@ public class ForgetPasswordPageController {
     @FXML
     public TextField txtRole;
 
-    @FXML
-//    public AnchorPane ancResetPassword;
+    SystemUserBO systemUserBO = (SystemUserBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.SYSTEM_USER);
 
-    public void submitDetailsOnAction(ActionEvent actionEvent) throws IOException {
+    public void submitDetailsOnAction(ActionEvent actionEvent) throws IOException, SQLException {
 
             String userId = txtUserId.getText();
             String username = txtUserName.getText();
@@ -44,9 +46,7 @@ public class ForgetPasswordPageController {
             String phone = txtMobile.getText();
             String role = txtRole.getText();
 
-            SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
-
-            boolean isValid = systemUserModel.validateUserForPasswordReset(userId,username,role,phone,email,nic);
+            boolean isValid = systemUserBO.validateUserForPasswordReset(userId,username,role,phone,email,nic);
 
             if (isValid) {
                 lblErrorMassage.setText("User validated!");

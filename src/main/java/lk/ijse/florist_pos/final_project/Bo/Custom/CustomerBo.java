@@ -19,4 +19,7 @@ public interface CustomerBo extends SuperBO {
 
      CustomerDto searchCustomerByPhone(String phoneNumber) throws SQLException ;
 
+     String getCustomerName(String number) throws SQLException;
+
+
 }

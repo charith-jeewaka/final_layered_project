@@ -76,6 +76,11 @@ public class CustomerBoImpl implements CustomerBo{
         }
         return null;
     }
+
+    @Override
+    public String getCustomerName(String number) throws SQLException {
+        return customerDao.getCustomerName(number);
+    }
 }
 
 

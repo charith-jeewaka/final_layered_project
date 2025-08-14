@@ -94,7 +94,13 @@ public class CustomerDaoImpl implements CustomerDao {
         }
     }
 
-
-
+    @Override
+    public String getCustomerName(String number) throws SQLException {
+        ResultSet rs = CrudUtil.execute("SELECT name FROM customer WHERE phone_number = ?", number);
+        if (rs.next()) {
+            return rs.getString("name");
+        }
+        return null;
+    }
 
 }

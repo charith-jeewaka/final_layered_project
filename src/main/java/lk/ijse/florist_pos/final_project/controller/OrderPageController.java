@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
 import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
 import lk.ijse.florist_pos.final_project.Bo.Custom.impl.OrderBoImpl;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
@@ -48,7 +49,6 @@ public class OrderPageController implements Initializable {
     public Label lblQtyOnHand;
     public Label lblOrderDate;
     public Label lblOrderId;
-
     public Label lblBalence;
 
     public TextField txtAddToCartQty;
@@ -57,7 +57,7 @@ public class OrderPageController implements Initializable {
     public TextField txtCash;
 
     private final ObservableList<CartTm> cartTmList = FXCollections.observableArrayList();
-    private final OrderDaoImpl orderModel = new OrderDaoImpl();
+
     public JFXRadioButton rbtnCard;
     public JFXRadioButton rbtnCash;
     public ToggleGroup paymentType = new ToggleGroup();
@@ -66,6 +66,10 @@ public class OrderPageController implements Initializable {
 
     OrderBO orderBO = (OrderBO)
             BOFactory.getInstance().getBo(BOFactory.BoTypes.ORDER);
+
+    private final OrderDaoImpl orderModel = new OrderDaoImpl();
+    CustomerBo customerBo =(CustomerBo) BOFactory.getInstance().getBo(BOFactory.BoTypes.CUSTOMER);
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,7 +86,7 @@ public class OrderPageController implements Initializable {
         txtCustomerMobile.setOnAction(e -> {
             String customerMobile = txtCustomerMobile.getText();
             try {
-                String customerName = orderModel.getCustomerName(customerMobile);
+                String customerName = customerBo.getCustomerName(customerMobile);
                 if (customerName != null) {
                     lblCustomerName.setText(customerName);
                     txtItemId.requestFocus();
@@ -291,7 +295,7 @@ public class OrderPageController implements Initializable {
     public void searchCustomerOnAction(ActionEvent actionEvent) {
         try {
             String customerMobile = txtCustomerMobile.getText();
-            String customerName = orderModel.getCustomerName(customerMobile);
+            String customerName = customerBo.getCustomerName(customerMobile);
 
             if (customerName != null) {
                 lblCustomerName.setText(customerName);

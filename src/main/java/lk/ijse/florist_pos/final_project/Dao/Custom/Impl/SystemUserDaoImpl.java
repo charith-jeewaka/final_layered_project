@@ -1,60 +1,18 @@
 package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
+
 import lk.ijse.florist_pos.final_project.Dao.Custom.SystemUserDao;
 import lk.ijse.florist_pos.final_project.Entity.SystemUser;
-import lk.ijse.florist_pos.final_project.controller.DashboardController;
-import lk.ijse.florist_pos.final_project.controller.LoginScreenController;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 public class SystemUserDaoImpl implements SystemUserDao {
 
-    public void validateLogin(TextField username, PasswordField password, Label label) {
-        LoginScreenController loginScreenController = new LoginScreenController();
-        try {
-            String sql = "SELECT * FROM system_user WHERE user_name = ? AND password = ?";
-            ResultSet rs = CrudUtil.execute(sql, username.getText(), password.getText());
-
-            if (rs.next()) {
-                label.setText("Login successful!");
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Dashboard.fxml"));
-                Parent root = loader.load();
-
-                DashboardController dashboardController = loader.getController();
-                String user = rs.getString("user_name");
-                dashboardController.lblCurrentUser.setText(user);
-                dashboardController.lblDashBoardName.setText(user);
-
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
-
-                ((Stage) username.getScene().getWindow()).close();
-            } else {
-                label.setText("Invalid username or password");
-                username.clear();
-                password.clear();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            label.setText("Database error!");
-        }
-
-        loginScreenController.clearText();
+    @Override
+    public ResultSet validateLogin(String username, String password) throws SQLException {
+        String sql = "SELECT * FROM system_user WHERE user_name = ? AND password = ?";
+        return CrudUtil.execute(sql, username, password);
     }
 
 
