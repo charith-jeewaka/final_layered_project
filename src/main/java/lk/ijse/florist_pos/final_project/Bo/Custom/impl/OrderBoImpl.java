@@ -9,8 +9,7 @@ import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
 import lk.ijse.florist_pos.final_project.Dao.DaoFactory;
 import lk.ijse.florist_pos.final_project.Entity.OrderDetails;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
-
-import java.math.BigDecimal;
+import lk.ijse.florist_pos.final_project.dto.Tm.OrderStats;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -96,5 +95,11 @@ public class OrderBoImpl implements OrderBO {
     @Override
     public String getNextOrderId() throws SQLException {
         return orderDao.getNextId();
+    }
+
+    @Override
+    public List<OrderStats> getOrderCountsByCustomer() throws SQLException {
+        // Delegate the call to the DAO
+        return orderDao.getOrderCountsByCustomer();
     }
 }

@@ -3,11 +3,13 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.OrderDao;
 import lk.ijse.florist_pos.final_project.Entity.OrderDetails;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
+import lk.ijse.florist_pos.final_project.dto.Tm.OrderStats;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
 
@@ -141,5 +143,22 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public ArrayList<OrderDetails> getAll() throws SQLException {
         return null;
+    }
+
+    @Override
+    public List<OrderStats> getOrderCountsByCustomer() throws SQLException {
+        String sql = "SELECT customer_name, COUNT(*) AS order_count FROM order_item_details GROUP BY customer_name";
+
+        ResultSet rs = CrudUtil.execute(sql);
+
+        List<OrderStats> list = new ArrayList<>();
+
+        while (rs.next()) {
+            String name = rs.getString("customer_name");
+            int count = rs.getInt("order_count");
+            list.add(new OrderStats(name, count));
+        }
+
+        return list;
     }
 }

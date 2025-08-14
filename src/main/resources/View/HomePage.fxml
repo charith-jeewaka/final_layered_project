@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -139,14 +137,7 @@
                   </HBox>
                </children>
             </HBox>
-            <BarChart fx:id="barChart" layoutX="20.0" layoutY="257.0" prefHeight="214.0" prefWidth="704.0" stylesheets="@../CssStyles/barCss.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="257.0">
-              <xAxis>
-                <CategoryAxis fx:id="barDates" prefHeight="31.0" prefWidth="647.0" side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis fx:id="barSales" side="LEFT" />
-              </yAxis>
-            </BarChart>
+            <PieChart fx:id="ordersPieChart" layoutX="24.0" layoutY="254.0" prefHeight="242.0" prefWidth="717.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: null; -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-width: 3;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="254.0" />
          </children>
       </AnchorPane>
    </children>
