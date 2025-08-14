@@ -122,7 +122,6 @@ public class OrderDaoImpl implements OrderDao {
     public static double getYesterdayTotalSaleForDashBoard() throws SQLException {
         String sql = "SELECT SUM(CAST(total_bill AS DECIMAL(10,2))) AS yesterday_sales FROM order_item_details WHERE DATE(order_date) = CURDATE() - INTERVAL 1 DAY";
 
-
         ResultSet rs = CrudUtil.execute(sql);
         double yesterdaySale = 0;
         if (rs.next()) {
@@ -134,7 +133,8 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public boolean save(OrderDetails entity) throws SQLException {
         return CrudUtil.execute(
-                "INSERT INTO orders (order_id, customer_name, item_name, item_id, payment_type, item_qty, total_amount, handled_by, total_bill) " +
+                "INSERT INTO orders (order_id, customer_name, item_name, item_id, payment_type," +
+                        " item_qty, total_amount, handled_by, total_bill) " +
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 entity.getOrderId(),
                 entity.getCustomerName(),

@@ -8,9 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.SystemUserBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.SystemUserDao;
 import lk.ijse.florist_pos.final_project.Entity.SystemUser;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.SystemUserDaoImpl;
+import lk.ijse.florist_pos.final_project.dto.SystemUserDto;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,7 +45,7 @@ public class UserPageController implements Initializable {
     public TextField txtVerificationCode;
     public Button btnSendCode;
 
-    SystemUserDao systemUserDao = new SystemUserDaoImpl();
+    SystemUserBO systemUserBO = (SystemUserBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.SYSTEM_USER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,7 +66,7 @@ public class UserPageController implements Initializable {
         boolean isValidEmail = email.matches(emailPattern);
         boolean isValidPassword = password.matches(passwordPattern);
 
-        SystemUser systemUser = new SystemUser(
+        SystemUserDto systemUserDto = new SystemUserDto(
                 0, 
                 userName,
                 password,
@@ -75,7 +79,7 @@ public class UserPageController implements Initializable {
         if(isValidMobile && isValidEmail && isValidPassword && isValidName) {
 
             try {
-                boolean isSaved = systemUserDao.save(systemUser);
+                boolean isSaved = systemUserBO.saveUser(systemUserDto);
                 if (isSaved) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Success");

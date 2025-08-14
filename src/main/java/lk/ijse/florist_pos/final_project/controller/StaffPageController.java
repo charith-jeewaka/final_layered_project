@@ -13,10 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.florist_pos.final_project.Dao.Custom.StaffDao;
-import lk.ijse.florist_pos.final_project.Entity.Employee;
+import lk.ijse.florist_pos.final_project.Bo.BOFactory;
+import lk.ijse.florist_pos.final_project.Bo.Custom.StaffBO;
+import lk.ijse.florist_pos.final_project.dto.EmployeeDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.StaffTM;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.StaffDaoImpll;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,8 +41,9 @@ public class StaffPageController implements Initializable {
     public Label lblEmpId;
     public TextField txtSalary;
     public TextField txtRole;
-    StaffDaoImpll staffModel = new StaffDaoImpll();
-    StaffDao staffDao = new StaffDaoImpll();
+
+    StaffBO staffBO = (StaffBO)
+            BOFactory.getInstance().getBo(BOFactory.BoTypes.STAFF);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,26 +61,24 @@ public class StaffPageController implements Initializable {
     }
 
     public void resetPage(){
-
         loadTableData();
-
     }
     public void loadTableData() {
-        ArrayList<Employee> employees;
+        ArrayList<EmployeeDto> employeeDtos;
         try {
-            employees = staffDao.getAll();
+            employeeDtos = staffBO.getAllEmployees();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         ObservableList<StaffTM> staffTMS = FXCollections.observableArrayList();
-        for (Employee employee : employees) {
+        for (EmployeeDto employeeDto : employeeDtos) {
             StaffTM staffTM = new StaffTM(
-                    employee.getEmployeeId(),
-                    employee.getEmployeeName(),
-                    employee.getEmployeeSalary(),
-                    employee.getEmployeePosition(),
-                    employee.getEmployeeEmail()
+                    employeeDto.getEmployeeId(),
+                    employeeDto.getEmployeeName(),
+                    employeeDto.getEmployeeSalary(),
+                    employeeDto.getEmployeePosition(),
+                    employeeDto.getEmployeeEmail()
             );
             staffTMS.add(staffTM);
         }

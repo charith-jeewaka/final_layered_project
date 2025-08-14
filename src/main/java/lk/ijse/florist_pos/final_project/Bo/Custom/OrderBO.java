@@ -9,5 +9,4 @@ public interface OrderBO extends SuperBO {
 
     boolean placeOrder(List<OrderDetailsDto> orderDetailsList) throws SQLException ;
 
-
 }

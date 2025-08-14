@@ -3,13 +3,11 @@ package lk.ijse.florist_pos.final_project.Dao.Custom.Impl;
 import lk.ijse.florist_pos.final_project.Dao.Custom.StaffDao;
 import lk.ijse.florist_pos.final_project.Entity.Employee;
 import lk.ijse.florist_pos.final_project.util.CrudUtil;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StaffDaoImpll implements StaffDao {
-
 
     @Override
     public String getNextId() throws SQLException {
@@ -65,5 +63,4 @@ public class StaffDaoImpll implements StaffDao {
         System.out.println("Total employees: " + employeeCount);
         return employeeCount;
     }
-
 }

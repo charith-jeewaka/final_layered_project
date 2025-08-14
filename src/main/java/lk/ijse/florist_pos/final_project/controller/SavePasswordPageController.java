@@ -26,8 +26,7 @@ public class SavePasswordPageController {
     @FXML
     public Label lblSavePasswordMassage;
 
-
-
+    SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
 
     public void backOnAction(ActionEvent actionEvent) {
         navigateTo("/View/ForgetPassword.fxml");
@@ -56,7 +55,6 @@ public class SavePasswordPageController {
 
         if (newPassword.equals(confirmPassword)) {
             if (newPassword.length() >= 3) {
-                SystemUserDaoImpl systemUserModel = new SystemUserDaoImpl();
                 if (systemUserModel.updateUserPassword(txtResetUserId.getText(), newPassword)) {
                     lblSavePasswordMassage.setText("Password updated successfully!");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);

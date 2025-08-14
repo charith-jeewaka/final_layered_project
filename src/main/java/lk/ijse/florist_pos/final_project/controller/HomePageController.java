@@ -7,17 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.florist_pos.final_project.Bo.BOFactory;
-import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
 import lk.ijse.florist_pos.final_project.Bo.Custom.FlowerBO;
 import lk.ijse.florist_pos.final_project.Bo.Custom.PlantBO;
-import lk.ijse.florist_pos.final_project.Dao.Custom.FlowerDao;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.FlowerDaoImpl;
+import lk.ijse.florist_pos.final_project.Bo.Custom.StaffBO;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.PlantDaoImpl;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.StaffDaoImpll;
-import lk.ijse.florist_pos.final_project.Dao.Custom.PlantDao;
-import lk.ijse.florist_pos.final_project.Dao.Custom.StaffDao;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -35,13 +28,14 @@ public class HomePageController implements Initializable {
     public NumberAxis barSales;
 
 
-FlowerBO flowerBO =
-        (FlowerBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.FLOWER);
+    FlowerBO flowerBO =
+            (FlowerBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.FLOWER);
 
-PlantBO plantBO = (PlantBO)BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT);
+    PlantBO plantBO =
+            (PlantBO)BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT);
 
-    StaffDao staffDao = new StaffDaoImpll();
-
+    StaffBO staffBO =
+            (StaffBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.STAFF);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,14 +48,12 @@ PlantBO plantBO = (PlantBO)BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT
             lblTodaySale.setText(String.valueOf(todaySale));
             int totalPlants = plantBO.getTotalPlantQty();
             lblTotalPlants.setText(String.valueOf(totalPlants));
-            int totalEmployee = staffDao.getTotalEmployees();
+            int totalEmployee = staffBO.getTotalEmployees();
             lblEmployees.setText(String.valueOf(totalEmployee));
             int totalFlowers = flowerBO.getTotalFlowerQty();
             lblTotalFlowers.setText(String.valueOf(totalFlowers));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 }

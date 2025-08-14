@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SentEmailDaoImpl implements SentEmailDao {
+
     @Override
     public boolean save(SentEmail sentEmail) {
         try {

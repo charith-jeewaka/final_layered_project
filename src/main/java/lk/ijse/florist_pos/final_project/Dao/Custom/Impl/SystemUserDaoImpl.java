@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 
 public class SystemUserDaoImpl implements SystemUserDao {
+
     public void validateLogin(TextField username, PasswordField password, Label label) {
         LoginScreenController loginScreenController = new LoginScreenController();
         try {
@@ -46,11 +47,9 @@ public class SystemUserDaoImpl implements SystemUserDao {
                 stage.setScene(new Scene(root));
                 stage.show();
 
-
                 ((Stage) username.getScene().getWindow()).close();
 
             } else {
-
                 label.setText("Invalid username or password");
                 username.clear();
                 password.clear();
