@@ -1,7 +1,10 @@
 package lk.ijse.florist_pos.final_project.Bo.Custom;
 
 import lk.ijse.florist_pos.final_project.Bo.SuperBO;
+import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
+
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,6 +16,7 @@ public interface OrderBO extends SuperBO {
 
     double getTodayTotalSaleForDashBoard() throws SQLException ;
 
+    String getNextOrderId() throws SQLException ;
 
 
 }

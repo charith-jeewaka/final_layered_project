@@ -15,12 +15,10 @@ import lk.ijse.florist_pos.final_project.Bo.BOFactory;
 import lk.ijse.florist_pos.final_project.Bo.Custom.CustomerBo;
 import lk.ijse.florist_pos.final_project.Bo.Custom.OrderBO;
 import lk.ijse.florist_pos.final_project.Bo.Custom.PlantBO;
-import lk.ijse.florist_pos.final_project.Bo.Custom.impl.OrderBoImpl;
-import lk.ijse.florist_pos.final_project.Dao.Custom.OrderDao;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 import lk.ijse.florist_pos.final_project.dto.OrderItemDto;
 import lk.ijse.florist_pos.final_project.dto.Tm.CartTm;
-import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
+import lk.ijse.florist_pos.final_project.util.ReportGenerator;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -72,9 +70,10 @@ public class OrderPageController implements Initializable {
     CustomerBo customerBo =(CustomerBo)
             BOFactory.getInstance().getBo(BOFactory.BoTypes.CUSTOMER);
 
-    PlantBO plantBO = (PlantBO) BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT);
+    PlantBO plantBO = (PlantBO)
+            BOFactory.getInstance().getBo(BOFactory.BoTypes.PLANT);
 
-    OrderDao orderDao = new OrderDaoImpl();
+//    OrderDao orderDao = new OrderDaoImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -279,7 +278,7 @@ public class OrderPageController implements Initializable {
     }
 
     private void loadNextOrderId() throws SQLException {
-        String nextOid = orderDao.getNextId();
+        String nextOid = orderBO.getNextOrderId();
         lblOrderId.setText(nextOid);
     }
 

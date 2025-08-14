@@ -11,7 +11,8 @@ public interface OrderDao extends CrudDao<OrderDetails>{
 
     double getYesterdayTotalSaleForDashBoard() throws SQLException ;
 
-    public  double getTodayTotalSaleForDashBoard() throws SQLException ;
+    double getTodayTotalSaleForDashBoard() throws SQLException ;
+
 
 
 }

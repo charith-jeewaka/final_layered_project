@@ -10,6 +10,7 @@ import lk.ijse.florist_pos.final_project.Dao.DaoFactory;
 import lk.ijse.florist_pos.final_project.Entity.OrderDetails;
 import lk.ijse.florist_pos.final_project.dto.OrderDetailsDto;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -90,5 +91,10 @@ public class OrderBoImpl implements OrderBO {
     @Override
     public double getTodayTotalSaleForDashBoard() throws SQLException {
         return orderDao.getTodayTotalSaleForDashBoard();
+    }
+
+    @Override
+    public String getNextOrderId() throws SQLException {
+        return orderDao.getNextId();
     }
 }

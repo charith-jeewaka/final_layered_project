@@ -1,4 +1,4 @@
-package lk.ijse.florist_pos.final_project.controller;
+package lk.ijse.florist_pos.final_project.util;
 import lk.ijse.florist_pos.final_project.DBConnect.DBConnection;
 import lk.ijse.florist_pos.final_project.Dao.Custom.Impl.OrderDaoImpl;
 import net.sf.jasperreports.engine.*;
@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
-
 
 public class ReportGenerator {
 
@@ -26,7 +25,7 @@ public class ReportGenerator {
 
             //  Prepare parameters
             HashMap<String, Object> params = new HashMap<>();
-            params.put("TotalIncome", todayIncome); // Make sure your JRXML has a parameter with this exact name
+            params.put("TotalIncome", todayIncome);
 
             // Fill the report
             Connection connection = DBConnection.getInstance().getConnection();
@@ -48,7 +47,7 @@ public class ReportGenerator {
             );
 
             HashMap<String, Object> params = new HashMap<>();
-            params.put("YTotalIncome", yesterdayIncome); // Make sure your JRXML has a parameter with this exact name
+            params.put("YTotalIncome", yesterdayIncome);
 
             Connection connection = DBConnection.getInstance().getConnection();
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);
@@ -68,7 +67,7 @@ public class ReportGenerator {
             );
 
             HashMap<String, Object> params = new HashMap<>();
-            params.put("Balance", balance); // Make sure your JRXML has a parameter with this exact name
+            params.put("Balance", balance);
 
             Connection connection = DBConnection.getInstance().getConnection();
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, connection);

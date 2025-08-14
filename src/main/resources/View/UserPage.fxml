@@ -150,7 +150,7 @@
             </Label>
          </children>
       </HBox>
-      <TextField fx:id="txtVerificationCode" layoutX="312.0" layoutY="148.0" prefHeight="37.0" prefWidth="149.0" promptText="Verification" style="-fx-background-color: null; -fx-border-color: black;" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="312.0" AnchorPane.topAnchor="148.0">
+      <TextField fx:id="txtVerificationCode" layoutX="306.0" layoutY="455.0" prefHeight="37.0" prefWidth="149.0" promptText="Verification" style="-fx-background-color: null; -fx-border-color: black;" AnchorPane.leftAnchor="306.0" AnchorPane.rightAnchor="318.0" AnchorPane.topAnchor="455.0">
          <font>
             <Font size="18.0" />
          </font>
